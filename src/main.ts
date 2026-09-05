@@ -1,5 +1,7 @@
-// SLDS 2 stylesheet (component framework + global styling hooks --slds-g-*).
-import "@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.css";
+// SLDS 2 stylesheet: the real SLDS 2 bundle (component structure + Cosmos theme
+// tokens + global styling hooks --slds-g-*) from @salesforce-ux/design-system-2.
+// Icon sprites/images are still served from the SLDS 1 package via vite.config.ts.
+import "@salesforce-ux/design-system-2/dist/css/bundled/slds2.cosmos.css";
 import "./styles/app.css";
 
 const UTILITY = "/assets/icons/utility-sprite/svg/symbols.svg";

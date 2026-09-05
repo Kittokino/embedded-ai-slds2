@@ -7,11 +7,14 @@ A front-end prototype exploring embedded AI experiences, built on the
 
 ## Stack
 
-- **Vite** + **TypeScript** (no framework runtime).
-- **SLDS 2** via [`@salesforce-ux/design-system`](https://www.npmjs.com/package/@salesforce-ux/design-system)
-  — component CSS framework + SLDS 2 global styling hooks.
-- SLDS icon sprites & images are served from the installed package at dev time and copied into
-  the build via `vite-plugin-static-copy` (see `vite.config.ts`).
+- **Vite** + **TypeScript** (no framework runtime — builds to plain static HTML/CSS/JS).
+- **SLDS 2** styling via [`@salesforce-ux/design-system-2`](https://www.npmjs.com/package/@salesforce-ux/design-system-2)
+  — the `dist/css/bundled/slds2.cosmos.css` bundle (component structure + Cosmos theme tokens +
+  `--slds-g-*` global styling hooks). Swappable with the `lightning-blue` theme, and modular
+  base+theme files exist for runtime theme switching.
+- SLDS **icon sprites & images** come from [`@salesforce-ux/design-system`](https://www.npmjs.com/package/@salesforce-ux/design-system)
+  (the `-2` package doesn't ship icon sprites); they're served from `node_modules` at dev time and
+  copied into the build via `vite-plugin-static-copy` (see `vite.config.ts`).
 
 ## Getting started
 

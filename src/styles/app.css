@@ -1,0 +1,31 @@
+/* App-specific styles. Prefer SLDS utility classes and SLDS 2 global styling
+   hooks (--slds-g-*) over hard-coded values as the project grows. */
+
+body {
+  margin: 0;
+  background: var(--slds-g-color-surface-container-1, #f3f3f3);
+}
+
+.hook-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.hook-swatch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hook-swatch__chip {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--slds-g-color-border-1, #c9c9c9);
+  display: inline-block;
+}
+
+.hook-swatch__label {
+  font-size: 0.75rem;
+}

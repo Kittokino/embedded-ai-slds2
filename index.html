@@ -238,7 +238,7 @@
               </div>
             </div>
 
-            <div class="slds-card__body slds-card__body_inner">
+            <div class="slds-card__body slds-card__body_inner ai-summary__body">
               <!-- Empty / prompt state -->
               <div class="ai-summary__empty" data-ai-empty>
                 <p class="slds-text-body_small slds-text-color_weak slds-text-align_center ai-summary__disclaimer">
@@ -276,8 +276,66 @@
                 </div>
               </div>
 
-              <!-- Result state (populated later by interaction) -->
-              <div class="ai-summary__result" data-ai-result hidden></div>
+              <!-- Brief loading overlay during the transition -->
+              <div class="ai-summary__loader" data-ai-loader hidden>
+                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                  <span class="slds-assistive-text">Loading</span>
+                  <div class="slds-spinner__dot-a"></div>
+                  <div class="slds-spinner__dot-b"></div>
+                </div>
+              </div>
+
+              <!-- Prompt form state -->
+              <div class="ai-summary__form" data-ai-form hidden>
+                <p class="ai-form__prompt">Prompt: <strong data-ai-prompt-label>Personalized Upsell Email</strong>
+                  <svg class="ai-form__caret" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                </p>
+
+                <!-- Account (default record, read-only) -->
+                <div class="slds-form-element ai-field">
+                  <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr> Account</label>
+                  <div class="ai-lookup is-disabled">
+                    <span class="slds-icon_container slds-icon-standard-account ai-lookup__icon"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use></svg></span>
+                    <span class="ai-lookup__value">Acme, Inc.</span>
+                    <button class="ai-lookup__action" type="button" title="Clear" disabled><svg class="ai-lookup__action-icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg></button>
+                  </div>
+                  <p class="ai-field__help"><svg class="ai-field__help-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg> Default Page</p>
+                </div>
+
+                <!-- Opportunity (pre-filled) -->
+                <div class="slds-form-element ai-field">
+                  <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr> Opportunity</label>
+                  <div class="ai-lookup">
+                    <span class="slds-icon_container slds-icon-standard-opportunity ai-lookup__icon"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use></svg></span>
+                    <span class="ai-lookup__value is-filled">Cross-Sell - Marketing Cloud Add-On</span>
+                    <button class="ai-lookup__action ai-lookup__action_brand" type="button" title="Clear"><svg class="ai-lookup__action-icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg></button>
+                  </div>
+                </div>
+
+                <!-- Contact (search) -->
+                <div class="slds-form-element ai-field">
+                  <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr> Contact</label>
+                  <div class="ai-lookup is-focused">
+                    <span class="slds-icon_container slds-icon-standard-contact ai-lookup__icon"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span>
+                    <input class="ai-lookup__input" type="text" placeholder="Search Contacts..." />
+                    <svg class="ai-lookup__search" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use></svg>
+                  </div>
+                </div>
+
+                <!-- Additional input -->
+                <div class="slds-form-element ai-field">
+                  <label class="slds-form-element__label">Additional Input</label>
+                  <textarea class="slds-textarea ai-form__textarea" placeholder="Add any extra context for the email&hellip;"></textarea>
+                </div>
+
+                <!-- Footer -->
+                <div class="ai-summary__form-footer">
+                  <button class="slds-button slds-button_outline-brand" type="button" data-ai-back>Back</button>
+                  <button class="slds-button slds-button_brand ai-form__generate" type="button" disabled>
+                    <svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>Generate
+                  </button>
+                </div>
+              </div>
             </div>
           </article>
 

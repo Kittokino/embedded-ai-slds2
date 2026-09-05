@@ -1,6 +1,11 @@
 /* App-specific layout. Prefer SLDS utility classes and SLDS 2 global styling
    hooks (--slds-g-*) over hard-coded values as the project grows. */
 
+/* Ensure the hidden attribute always wins, even over display:flex/grid rules. */
+[hidden] {
+  display: none !important;
+}
+
 /* desktop-first console; clip chrome edges rather than scroll the page */
 html {
   overflow-x: hidden;
@@ -167,6 +172,156 @@ body {
 }
 .ai-summary__prompt {
   border-radius: 999px;
+}
+
+/* ---- AI Summary: loader overlay ---- */
+.ai-summary__body {
+  position: relative;
+}
+.ai-summary__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 5;
+}
+
+/* ---- AI Summary: prompt form ---- */
+.ai-form__prompt {
+  font-size: 0.95rem;
+  color: var(--slds-g-color-on-surface-1, #181818);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+.ai-form__caret {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: var(--slds-g-color-accent-3, #032d60);
+}
+.ai-field {
+  margin-bottom: 1rem;
+}
+.ai-field .slds-form-element__label {
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+}
+.ai-field .slds-required {
+  color: var(--slds-g-color-error-1, #ba0517);
+  margin-right: 0.125rem;
+}
+/* Lookup-style control */
+.ai-lookup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  min-height: 2.25rem;
+  border: 1px solid var(--slds-g-color-border-2, #a8a8a8);
+  border-radius: 0.5rem;
+  background: var(--slds-g-color-surface-1, #fff);
+}
+.ai-lookup.is-disabled {
+  border-color: var(--slds-g-color-border-1, #d0d0d0);
+  background: var(--slds-g-color-surface-container-1, #fbfbfb);
+}
+.ai-lookup.is-focused {
+  border-color: var(--slds-g-color-accent-3, #032d60);
+  box-shadow: 0 0 0 1px var(--slds-g-color-accent-3, #032d60);
+}
+.ai-lookup__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.ai-lookup__icon .slds-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.ai-lookup__value {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--slds-g-color-on-surface-2, #747474);
+}
+.ai-lookup__value.is-filled {
+  color: var(--slds-g-color-on-surface-1, #181818);
+}
+.ai-lookup__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--slds-g-color-on-surface-1, #181818);
+}
+.ai-lookup__input::placeholder {
+  color: var(--slds-g-color-on-surface-2, #747474);
+}
+.ai-lookup__action {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.125rem;
+  display: inline-flex;
+  flex: none;
+}
+.ai-lookup__action[disabled] {
+  cursor: default;
+}
+.ai-lookup__action-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: var(--slds-g-color-on-surface-2, #939393);
+}
+.ai-lookup__action_brand .ai-lookup__action-icon {
+  fill: var(--slds-g-color-accent-2, #0b5cab);
+}
+.ai-lookup__search {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  fill: var(--slds-g-color-on-surface-2, #5c5c5c);
+}
+.ai-field__help {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--slds-g-color-on-surface-2, #5c5c5c);
+}
+.ai-field__help-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: var(--slds-g-color-on-surface-2, #747474);
+}
+.ai-form__textarea {
+  min-height: 3.5rem;
+}
+.ai-summary__form-footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+.ai-summary__form-footer .slds-button {
+  border-radius: 999px;
+  min-width: 7rem;
 }
 
 /* ---- Contacts ---- */

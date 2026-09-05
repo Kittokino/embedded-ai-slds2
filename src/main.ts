@@ -67,3 +67,50 @@ function initTooltips(): void {
 }
 
 initTooltips();
+
+/**
+ * AI Summary widget: clicking a prompt shows a brief Salesforce spinner, then
+ * swaps the empty "Start with a prompt" state for the prompt form. "Back"
+ * restores the original empty state.
+ */
+function initAiSummary(): void {
+  const card = document.querySelector<HTMLElement>("#ai-summary");
+  if (!card) return;
+
+  const empty = card.querySelector<HTMLElement>("[data-ai-empty]");
+  const form = card.querySelector<HTMLElement>("[data-ai-form]");
+  const loader = card.querySelector<HTMLElement>("[data-ai-loader]");
+  const label = card.querySelector<HTMLElement>("[data-ai-prompt-label]");
+  const LOADER_MS = 700;
+
+  const openForm = (promptText: string): void => {
+    // Dismiss any lingering tooltip from the clicked prompt button.
+    document.querySelector(".tooltip-layer")?.remove();
+    if (label) label.textContent = promptText;
+    // Keep the empty state in place under the overlay so height doesn't jump.
+    if (loader) loader.hidden = false;
+    window.setTimeout(() => {
+      if (loader) loader.hidden = true;
+      if (empty) empty.hidden = true;
+      if (form) form.hidden = false;
+      card.dataset.state = "form";
+    }, LOADER_MS);
+  };
+
+  card.querySelectorAll<HTMLElement>("[data-prompt]").forEach((btn) => {
+    if (btn.dataset.prompt === "more") return; // no form for "More" yet
+    btn.addEventListener("click", () => {
+      const text = btn.querySelector("span")?.textContent?.trim() ?? "Personalized Upsell Email";
+      openForm(text);
+    });
+  });
+
+  card.querySelector<HTMLElement>("[data-ai-back]")?.addEventListener("click", () => {
+    if (form) form.hidden = true;
+    if (loader) loader.hidden = true;
+    if (empty) empty.hidden = false;
+    card.dataset.state = "empty";
+  });
+}
+
+initAiSummary();

@@ -79,8 +79,15 @@ function initAiSummary(): void {
 
   const empty = card.querySelector<HTMLElement>("[data-ai-empty]");
   const form = card.querySelector<HTMLElement>("[data-ai-form]");
+  const result = card.querySelector<HTMLElement>("[data-ai-result]");
   const loader = card.querySelector<HTMLElement>("[data-ai-loader]");
   const label = card.querySelector<HTMLElement>("[data-ai-prompt-label]");
+  const generateBtn = card.querySelector<HTMLButtonElement>(".ai-form__generate");
+  const oppBox = card.querySelector<HTMLElement>('[data-field="opportunity"]');
+  const contactBox = card.querySelector<HTMLElement>('[data-field="contact"]');
+  const emailEl = card.querySelector<HTMLElement>("[data-ai-email]");
+  const genTime = card.querySelector<HTMLElement>("[data-ai-gentime]");
+  const resultLabel = card.querySelector<HTMLElement>("[data-ai-result-label]");
   const LOADER_MS = 700;
 
   const openForm = (promptText: string): void => {
@@ -92,6 +99,7 @@ function initAiSummary(): void {
     window.setTimeout(() => {
       if (loader) loader.hidden = true;
       if (empty) empty.hidden = true;
+      if (result) result.hidden = true;
       if (form) form.hidden = false;
       card.dataset.state = "form";
     }, LOADER_MS);
@@ -107,9 +115,66 @@ function initAiSummary(): void {
 
   card.querySelector<HTMLElement>("[data-ai-back]")?.addEventListener("click", () => {
     if (form) form.hidden = true;
+    if (result) result.hidden = true;
     if (loader) loader.hidden = true;
     if (empty) empty.hidden = false;
     card.dataset.state = "empty";
+  });
+
+  // Enable Generate only once both Opportunity and Contact are chosen.
+  const bothSelected = (): boolean => Boolean(oppBox?.dataset.value && contactBox?.dataset.value);
+  const updateGenerate = (): void => {
+    if (generateBtn) generateBtn.disabled = !bothSelected();
+  };
+  card.addEventListener("combobox:change", updateGenerate);
+  updateGenerate();
+
+  const nowTime = (): string =>
+    new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+  // Build the mock "generated" email using the selected contact's first name.
+  const buildEmail = (): void => {
+    if (!emailEl) return;
+    const first = (contactBox?.dataset.value ?? "there").split(" ")[0];
+    const account = "Acme";
+    const opp = oppBox?.dataset.value ?? "this opportunity";
+    const paras = [
+      `Dear ${first},`,
+      `I hope this message finds you well. Thank you for your continued interest in partnering with us — your support as a champion for ${account} has meant a great deal, and we’re excited about what we can build together.`,
+      `Given your interest in ${opp}, I’d love to explore how it can deliver real impact for your team. Based on results we’ve seen with similar organizations, this is a strong opportunity to build on the value you’re already getting.`,
+      `Would you be open to a short call this week to walk through the details and answer any questions? I’m confident we can shape a plan that fits ${account}’s goals.`,
+      `Looking forward to hearing from you.`,
+      `Warm regards,<br>Your Account Team`,
+    ];
+    emailEl.innerHTML = paras.map((p) => `<p>${p}</p>`).join("");
+  };
+
+  const showResult = (): void => {
+    if (resultLabel && label) resultLabel.textContent = label.textContent;
+    buildEmail();
+    if (genTime) genTime.textContent = nowTime();
+    if (loader) loader.hidden = false;
+    window.setTimeout(() => {
+      if (loader) loader.hidden = true;
+      if (form) form.hidden = true;
+      if (empty) empty.hidden = true;
+      if (result) result.hidden = false;
+      card.dataset.state = "result";
+    }, LOADER_MS);
+  };
+
+  generateBtn?.addEventListener("click", () => {
+    if (bothSelected()) showResult();
+  });
+
+  // Regenerate: brief spinner, then refresh the email + timestamp in place.
+  card.querySelector<HTMLElement>("[data-ai-regen]")?.addEventListener("click", () => {
+    if (loader) loader.hidden = false;
+    window.setTimeout(() => {
+      if (loader) loader.hidden = true;
+      buildEmail();
+      if (genTime) genTime.textContent = nowTime();
+    }, LOADER_MS);
   });
 }
 
@@ -163,6 +228,7 @@ function initComboboxes(): void {
       value.classList.remove("is-placeholder");
     }
     box.dataset.value = text;
+    box.dispatchEvent(new CustomEvent("combobox:change", { bubbles: true, detail: { value: text } }));
     setOpen(box, false);
     box.querySelector<HTMLElement>("[data-combobox-trigger]")?.focus();
   };

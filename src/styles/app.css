@@ -434,6 +434,57 @@ body {
   min-width: 7rem;
 }
 
+/* ---- AI Summary: generated result ---- */
+.ai-result__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--slds-g-color-on-surface-2, #5c5c5c);
+  margin-bottom: 0.75rem;
+}
+.ai-result__regen {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.125rem;
+  display: inline-flex;
+}
+.ai-result__regen svg {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--slds-g-color-accent-2, #0b5cab);
+}
+.ai-result__body {
+  border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--slds-g-color-on-surface-1, #181818);
+}
+.ai-result__body p {
+  margin: 0 0 1rem;
+}
+.ai-result__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+.ai-result__agentforce {
+  border-radius: 999px;
+}
+.ai-result__actions {
+  display: flex;
+  gap: 0.125rem;
+}
+.ai-result__actions .slds-button__icon {
+  fill: var(--slds-g-color-on-surface-2, #5c5c5c);
+}
+
 /* ---- Contacts ---- */
 .contact-list {
   display: flex;

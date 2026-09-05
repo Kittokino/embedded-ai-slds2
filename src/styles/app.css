@@ -1,31 +1,147 @@
-/* App-specific styles. Prefer SLDS utility classes and SLDS 2 global styling
+/* App-specific layout. Prefer SLDS utility classes and SLDS 2 global styling
    hooks (--slds-g-*) over hard-coded values as the project grows. */
 
+/* desktop-first console; clip chrome edges rather than scroll the page */
+html {
+  overflow-x: hidden;
+}
 body {
   margin: 0;
   background: var(--slds-g-color-surface-container-1, #f3f3f3);
+  padding-bottom: 3rem; /* room for the fixed utility bar */
+  overflow-x: hidden;
 }
 
-.hook-swatches {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+/* ---- Global header ---- */
+.slds-global-header_container {
+  border-bottom: 1px solid var(--slds-g-color-border-1, #e5e5e5);
+}
+/* Let the console chrome shrink / scroll internally instead of forcing the
+   whole page to scroll horizontally on narrow viewports. */
+.slds-global-header {
+  min-width: 0;
+}
+.slds-global-header__item_search {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.slds-context-bar__secondary {
+  min-width: 0;
+  overflow-x: auto;
+}
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+}
+.header-actions {
+  gap: 0.25rem;
+}
+.header-actions svg {
+  fill: var(--slds-g-color-on-surface-2, #444);
 }
 
-.hook-swatch {
+/* ---- Page shell ---- */
+.page-shell {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+.record-grid {
+  align-items: flex-start;
+}
+
+/* ---- Left record detail fields ---- */
+.section-heading {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--slds-g-color-on-surface-1, #181818);
+}
+.field {
   display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+.field__label {
+  font-size: 0.75rem;
+  color: var(--slds-g-color-on-surface-2, #5c5c5c);
+}
+.field__value {
+  font-size: 0.875rem;
+  color: var(--slds-g-color-on-surface-1, #181818);
+}
+
+/* ---- Activity ---- */
+.activity-composer .slds-button {
+  white-space: nowrap;
+}
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.timeline__item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+/* ---- AI Summary widget ---- */
+.ai-summary__spark {
+  fill: var(--slds-g-color-accent-2, #0b5cab);
+}
+.ai-summary__disclaimer {
+  margin-bottom: 1rem;
+}
+.ai-summary__art {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0 1rem;
+}
+.ai-summary__prompts {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
 }
-
-.hook-swatch__chip {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.25rem;
-  border: 1px solid var(--slds-g-color-border-1, #c9c9c9);
-  display: inline-block;
+.ai-summary__prompt-row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.ai-summary__prompt {
+  border-radius: 999px;
 }
 
-.hook-swatch__label {
-  font-size: 0.75rem;
+/* ---- Contacts ---- */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+}
+.contact-list__item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+
+/* ---- Utility bar ---- */
+.utility-bar {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  align-items: stretch;
+  background: var(--slds-g-color-surface-1, #fff);
+  border-top: 1px solid var(--slds-g-color-border-1, #d8d8d8);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 100;
+}
+.utility-bar__item {
+  padding: 0 1rem;
+  font-size: 0.8rem;
+  border-right: 1px solid var(--slds-g-color-border-1, #e5e5e5);
 }

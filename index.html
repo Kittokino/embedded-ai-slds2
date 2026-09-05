@@ -6,7 +6,298 @@
     <title>Embedded AI with SLDS 2</title>
   </head>
   <body>
-    <div id="app"></div>
+    <!-- ============================ GLOBAL HEADER ============================ -->
+    <div class="slds-global-header_container">
+      <header class="slds-global-header slds-grid slds-grid_align-spread" role="banner">
+        <div class="slds-global-header__item">
+          <span class="app-logo" aria-label="Salesforce">
+            <svg viewBox="0 0 64 44" width="40" height="28" aria-hidden="true">
+              <path fill="#00A1E0" d="M26 8a12 12 0 0 1 21 3 14 14 0 0 1 5-1 13 13 0 0 1 0 26H16A14 14 0 0 1 13 8a13 13 0 0 1 13-0z"/>
+            </svg>
+          </span>
+        </div>
+
+        <div class="slds-global-header__item slds-global-header__item_search">
+          <div class="slds-form-element">
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+              <svg class="slds-icon slds-input__icon slds-input__icon_left slds-icon-text-default" aria-hidden="true">
+                <use href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+              </svg>
+              <input type="search" class="slds-input" placeholder="Search..." />
+            </div>
+          </div>
+        </div>
+
+        <div class="slds-global-header__item">
+          <ul class="slds-grid slds-grid_vertical-align-center header-actions">
+            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Agentforce"><svg class="slds-button__icon slds-button__icon_large"><use href="/assets/icons/utility-sprite/svg/symbols.svg#einstein"></use></svg></button></li>
+            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Favorites"><svg class="slds-button__icon slds-button__icon_large"><use href="/assets/icons/utility-sprite/svg/symbols.svg#favorite"></use></svg></button></li>
+            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Add"><svg class="slds-button__icon slds-button__icon_large"><use href="/assets/icons/utility-sprite/svg/symbols.svg#add"></use></svg></button></li>
+            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Help"><svg class="slds-button__icon slds-button__icon_large"><use href="/assets/icons/utility-sprite/svg/symbols.svg#help"></use></svg></button></li>
+            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Setup"><svg class="slds-button__icon slds-button__icon_large"><use href="/assets/icons/utility-sprite/svg/symbols.svg#setup"></use></svg></button></li>
+            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Notifications"><svg class="slds-button__icon slds-button__icon_large"><use href="/assets/icons/utility-sprite/svg/symbols.svg#notification"></use></svg></button></li>
+          </ul>
+        </div>
+      </header>
+    </div>
+
+    <!-- ============================ NAVIGATION BAR ============================ -->
+    <div class="slds-context-bar">
+      <div class="slds-context-bar__primary">
+        <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-no-hover slds-p-horizontal_none">
+          <button class="slds-button slds-icon-waffle_container" title="App Launcher">
+            <span class="slds-icon-waffle">
+              <span class="slds-r1"></span><span class="slds-r2"></span><span class="slds-r3"></span>
+              <span class="slds-r4"></span><span class="slds-r5"></span><span class="slds-r6"></span>
+              <span class="slds-r7"></span><span class="slds-r8"></span><span class="slds-r9"></span>
+            </span>
+          </button>
+        </div>
+        <div class="slds-context-bar__item slds-context-bar__item_divider-right">
+          <span class="slds-context-bar__label-action slds-context-bar__app-name">
+            <span class="slds-truncate slds-text-heading_small">Home</span>
+          </span>
+        </div>
+      </div>
+
+      <nav class="slds-context-bar__secondary" role="navigation">
+        <ul class="slds-grid">
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Home</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item slds-is-active"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Accounts</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Contacts</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Service</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Sales</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Calendar</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Dashboards</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">Reports</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+          <li class="slds-context-bar__item"><a href="#" class="slds-context-bar__label-action"><span class="slds-truncate">More</span></a><div class="slds-context-bar__icon-action"><button class="slds-button slds-button_icon slds-button_icon"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button></div></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- ============================ PAGE BODY ============================ -->
+    <div class="page-shell slds-p-around_small">
+      <!-- Record header -->
+      <div class="slds-page-header slds-page-header_record-home slds-m-bottom_small">
+        <div class="slds-page-header__row">
+          <div class="slds-page-header__col-title">
+            <div class="slds-media">
+              <div class="slds-media__figure">
+                <span class="slds-icon_container slds-icon-standard-account">
+                  <svg class="slds-icon slds-icon_medium"><use href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use></svg>
+                </span>
+              </div>
+              <div class="slds-media__body">
+                <p class="slds-text-title_caps slds-line-height_reset">Account</p>
+                <div class="slds-page-header__name">
+                  <div class="slds-page-header__name-title">
+                    <h1><span class="slds-page-header__title slds-truncate" data-company-name>Acme, Inc.</span></h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slds-page-header__col-actions">
+            <div class="slds-page-header__controls">
+              <div class="slds-button-group" role="group">
+                <button class="slds-button slds-button_neutral"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#add"></use></svg>Follow</button>
+                <button class="slds-button slds-button_neutral">New</button>
+                <button class="slds-button slds-button_neutral">Edit</button>
+                <button class="slds-button slds-button_neutral">Delete</button>
+                <button class="slds-button slds-button_neutral">Clone</button>
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="More actions"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Three column layout -->
+      <div class="slds-grid slds-gutters_small slds-wrap record-grid">
+        <!-- ---------- LEFT: record detail (minimal) ---------- -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+          <article class="slds-card">
+            <div class="slds-card__body slds-card__body_inner">
+              <button class="slds-button slds-section__title-action section-heading">
+                <svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                <span>About</span>
+              </button>
+
+              <div class="field"><span class="field__label">Account Name</span><span class="field__value" data-company-name>Acme, Inc.</span></div>
+              <div class="field"><span class="field__label">Website</span><span class="field__value slds-text-color_weak">&mdash;</span></div>
+              <div class="field"><span class="field__label">Type</span><span class="field__value slds-text-color_weak">&mdash;</span></div>
+              <div class="field"><span class="field__label">Description</span><span class="field__value slds-text-color_weak">&mdash;</span></div>
+              <div class="field"><span class="field__label">Parent Account</span><span class="field__value slds-text-color_weak">&mdash;</span></div>
+              <div class="field"><span class="field__label">Account Currency</span><span class="field__value">USD - U.S. Dollar</span></div>
+
+              <button class="slds-button slds-section__title-action section-heading slds-m-top_medium">
+                <svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                <span>Get in Touch</span>
+              </button>
+              <div class="field"><span class="field__label">Phone Number</span><span class="field__value slds-text-color_weak">&mdash;</span></div>
+              <div class="field"><span class="field__label">Billing Address</span><span class="field__value slds-text-color_weak">&mdash;</span></div>
+              <div class="field"><span class="field__label">Shipping Address</span><span class="field__value slds-text-color_weak">&mdash;</span></div>
+            </div>
+          </article>
+        </div>
+
+        <!-- ---------- MIDDLE: path + activity (minimal) ---------- -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+          <!-- Path -->
+          <article class="slds-card slds-m-bottom_small">
+            <div class="slds-card__body slds-card__body_inner">
+              <div class="slds-path">
+                <div class="slds-grid slds-path__track">
+                  <div class="slds-path__scroller-container">
+                    <div class="slds-path__scroller">
+                      <div class="slds-path__scroller_inner">
+                        <ul class="slds-path__nav">
+                          <li class="slds-path__item slds-is-complete"><a class="slds-path__link" href="#"><span class="slds-path__stage"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use></svg></span><span class="slds-path__title">Working</span></a></li>
+                          <li class="slds-path__item slds-is-incomplete"><a class="slds-path__link" href="#"><span class="slds-path__stage"></span><span class="slds-path__title">Incomplete</span></a></li>
+                          <li class="slds-path__item slds-is-incomplete"><a class="slds-path__link" href="#"><span class="slds-path__stage"></span><span class="slds-path__title">Incomplete</span></a></li>
+                          <li class="slds-path__item slds-is-incomplete"><a class="slds-path__link" href="#"><span class="slds-path__stage"></span><span class="slds-path__title">Incomplete</span></a></li>
+                          <li class="slds-path__item slds-is-incomplete"><a class="slds-path__link" href="#"><span class="slds-path__stage"></span><span class="slds-path__title">Incomplete</span></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-top_medium">
+                <h2 class="slds-text-heading_medium">Status: Working</h2>
+                <button class="slds-button slds-button_brand">Mark Stage as Complete</button>
+              </div>
+
+              <h3 class="slds-text-title_bold slds-m-top_medium slds-m-bottom_x-small">Guidance for Success</h3>
+              <ul class="slds-list_dotted">
+                <li>What problems do they want to solve and what are they hoping to improve?</li>
+                <li>Why are they looking now and where are they in the buying cycle?</li>
+                <li>What&rsquo;s their budget?</li>
+                <li>What other solutions are they considering?</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Activity (minimal) -->
+          <article class="slds-card">
+            <div class="slds-card__body slds-card__body_inner">
+              <div class="slds-grid slds-gutters_xx-small slds-m-bottom_small activity-composer">
+                <div class="slds-col"><button class="slds-button slds-button_neutral slds-button_stretch"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#call"></use></svg>Log a Call</button></div>
+                <div class="slds-col"><button class="slds-button slds-button_neutral slds-button_stretch"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#email"></use></svg>Email</button></div>
+                <div class="slds-col"><button class="slds-button slds-button_neutral slds-button_stretch"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#event"></use></svg>New Event</button></div>
+                <div class="slds-col slds-grow-none"><button class="slds-button slds-button_neutral"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#task"></use></svg></button></div>
+              </div>
+
+              <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">Filters: All time &middot; All activities &middot; All types</p>
+
+              <h3 class="slds-text-title_bold slds-m-bottom_x-small">Upcoming &amp; Overdue</h3>
+              <ul class="timeline">
+                <li class="timeline__item">
+                  <span class="slds-icon_container slds-icon-utility-email"><svg class="slds-icon slds-icon_x-small slds-icon-text-default"><use href="/assets/icons/utility-sprite/svg/symbols.svg#email"></use></svg></span>
+                  <div class="timeline__body"><a href="#">Re: Mobile conversation on Monday with the global team</a><p class="slds-text-body_small slds-text-color_weak">You emailed a contact &middot; 9:00am | 3/20/24</p></div>
+                </li>
+                <li class="timeline__item">
+                  <span class="slds-icon_container slds-icon-utility-email"><svg class="slds-icon slds-icon_x-small slds-icon-text-default"><use href="/assets/icons/utility-sprite/svg/symbols.svg#email"></use></svg></span>
+                  <div class="timeline__body"><a href="#">Re: Mobile conversation on Monday with the global team</a><p class="slds-text-body_small slds-text-color_weak">You emailed a contact &middot; 9:00am | 3/20/24</p></div>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <!-- ---------- RIGHT: AI SUMMARY (focus) + Contacts ---------- -->
+        <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+          <!-- ==================== AI SUMMARY WIDGET ==================== -->
+          <article id="ai-summary" class="slds-card ai-summary slds-m-bottom_small" data-state="empty">
+            <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                  <svg class="slds-icon slds-icon_small ai-summary__spark"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>
+                </div>
+                <div class="slds-media__body">
+                  <h2 class="slds-card__header-title"><span class="slds-text-heading_small">AI Summary</span></h2>
+                </div>
+              </header>
+              <div class="slds-no-flex">
+                <button class="slds-button slds-button_icon slds-button_icon-small" title="About this tool"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button>
+                <button class="slds-button slds-button_icon slds-button_icon-small" title="Expand"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#expand"></use></svg></button>
+              </div>
+            </div>
+
+            <div class="slds-card__body slds-card__body_inner">
+              <!-- Empty / prompt state -->
+              <div class="ai-summary__empty" data-ai-empty>
+                <p class="slds-text-body_small slds-text-color_weak slds-text-align_center ai-summary__disclaimer">
+                  This tool uses generative AI. Review responses to ensure they&rsquo;re accurate, valid, and harmless before you use them.
+                </p>
+
+                <div class="ai-summary__art" aria-hidden="true">
+                  <svg viewBox="0 0 200 140" width="180" height="126">
+                    <circle cx="92" cy="72" r="52" fill="#e5ecfb"/>
+                    <rect x="70" y="46" width="78" height="56" rx="6" fill="#ffffff" stroke="#c9d4ef"/>
+                    <rect x="80" y="58" width="34" height="7" rx="3.5" fill="#0b5cab"/>
+                    <rect x="80" y="72" width="58" height="5" rx="2.5" fill="#c2cbe0"/>
+                    <rect x="80" y="82" width="50" height="5" rx="2.5" fill="#c2cbe0"/>
+                    <path d="M150 40l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#0b5cab"/>
+                    <path d="M56 96l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#032d60"/>
+                  </svg>
+                </div>
+
+                <h3 class="slds-text-heading_small slds-text-align_center slds-m-bottom_medium">Start with a prompt</h3>
+
+                <div class="ai-summary__prompts">
+                  <button class="slds-button slds-button_outline-brand ai-summary__prompt" data-prompt="upsell">
+                    <span>Personalized Upsell Email</span>
+                    <svg class="slds-button__icon slds-button__icon_right ai-summary__spark"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>
+                  </button>
+                  <div class="ai-summary__prompt-row">
+                    <button class="slds-button slds-button_outline-brand ai-summary__prompt" data-prompt="briefing">
+                      <span>Pre-Call Briefing</span>
+                      <svg class="slds-button__icon slds-button__icon_right ai-summary__spark"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>
+                    </button>
+                    <button class="slds-button slds-button_neutral" data-prompt="more">More
+                      <svg class="slds-button__icon slds-button__icon_right"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Result state (populated later by interaction) -->
+              <div class="ai-summary__result" data-ai-result hidden></div>
+            </div>
+          </article>
+
+          <!-- Contacts (minimal) -->
+          <article class="slds-card">
+            <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                  <span class="slds-icon_container slds-icon-standard-contact"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span>
+                </div>
+                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="slds-text-heading_small">Contacts (3)</span></h2></div>
+              </header>
+            </div>
+            <div class="slds-card__body">
+              <ul class="contact-list">
+                <li class="contact-list__item"><span class="slds-icon_container slds-icon-standard-contact"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span><div><a href="#">Kristen Jones</a><p class="slds-text-body_small slds-text-color_weak">VP of Sales &middot; Decision Maker</p></div></li>
+                <li class="contact-list__item"><span class="slds-icon_container slds-icon-standard-contact"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span><div><a href="#">Marcus Lee</a><p class="slds-text-body_small slds-text-color_weak">Director, IT &middot; Influencer</p></div></li>
+                <li class="contact-list__item"><span class="slds-icon_container slds-icon-standard-contact"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span><div><a href="#">Priya Nair</a><p class="slds-text-body_small slds-text-color_weak">Procurement Lead &middot; Buyer</p></div></li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================ UTILITY BAR ============================ -->
+    <footer class="utility-bar">
+      <button class="slds-button utility-bar__item">
+        <svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#task"></use></svg>
+        To Do List
+      </button>
+    </footer>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

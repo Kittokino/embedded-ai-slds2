@@ -42,6 +42,14 @@ body {
   fill: var(--slds-g-color-on-surface-2, #444);
 }
 
+/* ---- Record header ---- */
+.record-eyebrow {
+  font-size: 0.625rem;
+}
+.status-heading {
+  font-size: 1rem;
+}
+
 /* ---- Page shell ---- */
 .page-shell {
   max-width: 1440px;
@@ -163,4 +171,9 @@ body {
 }
 .utility-bar__item:hover {
   text-decoration: underline;
+}
+.utility-bar__icon {
+  width: 1rem;
+  height: 0.9rem;
+  flex: none;
 }

@@ -88,7 +88,7 @@
                 </span>
               </div>
               <div class="slds-media__body">
-                <p class="slds-text-title_caps slds-line-height_reset">Account</p>
+                <p class="slds-text-title_caps slds-line-height_reset record-eyebrow">Account</p>
                 <div class="slds-page-header__name">
                   <div class="slds-page-header__name-title">
                     <h1><span class="slds-page-header__title slds-truncate" data-company-name>Acme, Inc.</span></h1>
@@ -165,7 +165,7 @@
               </div>
 
               <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center slds-m-top_medium">
-                <h2 class="slds-text-heading_medium">Status: Working</h2>
+                <h2 class="slds-text-heading_medium status-heading">Status: Working</h2>
                 <button class="slds-button slds-button_brand">Mark Stage as Complete</button>
               </div>
 
@@ -179,8 +179,13 @@
             </div>
           </article>
 
-          <!-- Activity (minimal) -->
+          <!-- Activity / Timeline (minimal) -->
           <article class="slds-card">
+            <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="widget-heading">Timeline</span></h2></div>
+              </header>
+            </div>
             <div class="slds-card__body slds-card__body_inner">
               <div class="slds-grid slds-gutters_xx-small slds-m-bottom_small activity-composer">
                 <div class="slds-col"><button class="slds-button slds-button_neutral slds-button_stretch"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#call"></use></svg>Log a Call</button></div>
@@ -292,8 +297,17 @@
 
     <!-- ============================ UTILITY BAR ============================ -->
     <footer class="utility-bar">
-      <!-- Plain link. Proper icon to be supplied later. -->
-      <a href="#" class="utility-bar__item">To Do List</a>
+      <a href="#" class="utility-bar__item">
+        <svg class="utility-bar__icon" viewBox="0 0 20 18" aria-hidden="true">
+          <path d="M1 4.4 L3 6.4 L6.6 1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="9" y="2.6" width="10" height="1.8" rx="0.9" fill="currentColor"/>
+          <rect x="1" y="8" width="3.6" height="3.6" rx="0.7" fill="currentColor"/>
+          <rect x="9" y="8.9" width="10" height="1.8" rx="0.9" fill="currentColor"/>
+          <rect x="1" y="14" width="3.6" height="3.6" rx="0.7" fill="currentColor"/>
+          <rect x="9" y="14.9" width="10" height="1.8" rx="0.9" fill="currentColor"/>
+        </svg>
+        To-do List
+      </a>
     </footer>
 
     <script type="module" src="/src/main.ts"></script>

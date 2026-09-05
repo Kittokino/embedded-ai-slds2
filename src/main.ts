@@ -114,3 +114,78 @@ function initAiSummary(): void {
 }
 
 initAiSummary();
+
+/**
+ * Custom dropdowns for the AI Summary form (Opportunity, Contact). Click to
+ * open a styled listbox; searchable ones ([data-searchable]) filter as you
+ * type. Closes on outside click or Escape.
+ */
+function initComboboxes(): void {
+  const boxes = Array.from(document.querySelectorAll<HTMLElement>("[data-combobox]"));
+  if (!boxes.length) return;
+
+  const setOpen = (box: HTMLElement, open: boolean): void => {
+    const list = box.querySelector<HTMLElement>("[data-combobox-list]");
+    const trigger = box.querySelector<HTMLElement>("[data-combobox-trigger]");
+    if (list) list.hidden = !open;
+    trigger?.setAttribute("aria-expanded", String(open));
+    box.classList.toggle("is-open", open);
+    if (open) {
+      const search = box.querySelector<HTMLInputElement>("[data-combobox-search]");
+      if (search) {
+        search.value = "";
+        filter(box, "");
+        window.setTimeout(() => search.focus(), 0);
+      }
+    }
+  };
+
+  const closeAll = (except?: HTMLElement): void => {
+    boxes.forEach((b) => b !== except && setOpen(b, false));
+  };
+
+  const filter = (box: HTMLElement, q: string): void => {
+    const query = q.trim().toLowerCase();
+    const empty = box.querySelector<HTMLElement>("[data-combobox-empty]");
+    let any = false;
+    box.querySelectorAll<HTMLElement>(".ai-dropdown__option").forEach((opt) => {
+      const match = opt.textContent!.toLowerCase().includes(query);
+      opt.hidden = !match;
+      if (match) any = true;
+    });
+    if (empty) empty.hidden = any;
+  };
+
+  const select = (box: HTMLElement, text: string): void => {
+    const value = box.querySelector<HTMLElement>("[data-combobox-value]");
+    if (value) {
+      value.textContent = text;
+      value.classList.remove("is-placeholder");
+    }
+    box.dataset.value = text;
+    setOpen(box, false);
+    box.querySelector<HTMLElement>("[data-combobox-trigger]")?.focus();
+  };
+
+  boxes.forEach((box) => {
+    box.querySelector<HTMLElement>("[data-combobox-trigger]")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = box.classList.contains("is-open");
+      closeAll(box);
+      setOpen(box, !open);
+    });
+    box.querySelectorAll<HTMLElement>(".ai-dropdown__option").forEach((opt) => {
+      opt.addEventListener("click", () => select(box, opt.textContent!.trim()));
+    });
+    const search = box.querySelector<HTMLInputElement>("[data-combobox-search]");
+    search?.addEventListener("input", () => filter(box, search.value));
+    box.querySelector<HTMLElement>("[data-combobox-list]")?.addEventListener("click", (e) => e.stopPropagation());
+  });
+
+  document.addEventListener("click", () => closeAll());
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAll();
+  });
+}
+
+initComboboxes();

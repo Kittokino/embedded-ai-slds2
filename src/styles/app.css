@@ -338,6 +338,89 @@ body {
 .ai-form__textarea {
   min-height: 3.5rem;
 }
+
+/* ---- Custom combobox (Opportunity, Contact) ---- */
+.ai-combobox {
+  position: relative;
+}
+.ai-lookup_trigger {
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.ai-combobox.is-open .ai-lookup_trigger {
+  border-color: var(--slds-g-color-accent-3, #032d60);
+  box-shadow: 0 0 0 1px var(--slds-g-color-accent-3, #032d60);
+}
+.ai-combobox.is-open .ai-lookup__caret {
+  transform: rotate(180deg);
+}
+.ai-lookup__value.is-placeholder {
+  color: #8e8e8e;
+}
+.ai-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  max-height: 15rem;
+  background: var(--slds-g-color-surface-1, #fff);
+  border: 1px solid var(--slds-g-color-border-1, #d0d0d0);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+.ai-dropdown__search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+.ai-dropdown__search-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: none;
+  fill: var(--slds-g-color-on-surface-2, #5c5c5c);
+}
+.ai-dropdown__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--slds-g-color-on-surface-1, #181818);
+}
+.ai-dropdown__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  overflow-y: auto;
+}
+.ai-dropdown__option {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--slds-g-color-on-surface-1, #181818);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ai-dropdown__option:hover,
+.ai-dropdown__option.is-active {
+  background: #eef2fb;
+}
+.ai-dropdown__empty {
+  padding: 0.625rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--slds-g-color-on-surface-2, #5c5c5c);
+}
 .ai-summary__form-footer {
   display: flex;
   justify-content: center;

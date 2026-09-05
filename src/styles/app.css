@@ -7,7 +7,9 @@ html {
 }
 body {
   margin: 0;
-  background: var(--slds-g-color-surface-container-1, #f3f3f3);
+  /* Same light grey as the record header, applied to the whole page so the
+     white component cards stand out against it. */
+  background: #f3f3f3;
   padding-bottom: 3rem; /* room for the fixed utility bar */
   overflow-x: hidden;
 }
@@ -49,8 +51,9 @@ body {
   align-items: flex-start;
 }
 
-/* ---- Left record detail fields ---- */
-.section-heading {
+/* ---- Shared widget heading (About, Get in Touch, AI Summary, Contacts...) ---- */
+.section-heading,
+.widget-heading {
   font-size: 0.9rem;
   font-weight: 700;
   color: var(--slds-g-color-on-surface-1, #181818);
@@ -149,7 +152,15 @@ body {
   z-index: 100;
 }
 .utility-bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
   padding: 0 1rem;
   font-size: 0.8rem;
+  color: var(--slds-g-color-accent-2, #0b5cab);
+  text-decoration: none;
   border-right: 1px solid var(--slds-g-color-border-1, #e5e5e5);
+}
+.utility-bar__item:hover {
+  text-decoration: underline;
 }

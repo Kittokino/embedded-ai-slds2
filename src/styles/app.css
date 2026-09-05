@@ -422,16 +422,21 @@ body {
   color: var(--slds-g-color-on-surface-2, #5c5c5c);
 }
 .ai-summary__form-footer {
+  position: relative;
   display: flex;
   justify-content: center;
-  gap: 0.75rem;
+  align-items: center;
   margin-top: 1.25rem;
   padding-top: 1rem;
   border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
 }
-.ai-summary__form-footer .slds-button {
+.ai-summary__form-footer [data-ai-back] {
+  position: absolute;
+  left: 0;
+}
+.ai-form__generate {
   border-radius: 999px;
-  min-width: 7rem;
+  min-width: 12rem;
 }
 
 /* ---- AI Summary: generated result ---- */
@@ -490,22 +495,22 @@ body {
   gap: 0.5rem;
 }
 
-/* ---- AI Summary: filled info icon (matches Figma's blue "i") ---- */
-.ai-summary__info {
-  background: var(--slds-g-color-accent-1, #066afe);
+/* Keep the widget's header actions (info, expand) quiet so they don't
+   compete with the sparkle title and the CTAs. */
+.ai-summary .slds-card__header .slds-no-flex .slds-button__icon {
+  fill: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+
+/* ---- AI Summary: round Back button (consistent across states) ---- */
+.ai-back {
   border-radius: 50%;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 2rem;
+  height: 2rem;
   min-width: 0;
+  flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  vertical-align: middle;
-}
-.ai-summary__info .slds-button__icon {
-  width: 0.7rem;
-  height: 0.7rem;
-  fill: var(--slds-g-color-on-accent-1, #fff);
 }
 
 /* ---- Prompt switcher (form + result) ---- */

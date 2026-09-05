@@ -153,9 +153,10 @@ function initAiSummary(): void {
       `Given your interest in <strong>${opp}</strong>, I’d love to explore how it can deliver real impact for your team. Based on results we’ve seen with similar organizations, this is a strong opportunity to build on the value you’re already getting.`,
       `Would you be open to a short call this week to walk through the details and answer any questions? I’m confident we can shape a plan that fits ${account}’s goals.`,
     ];
-    // Only fold in Additional Input when the user typed something (escaped).
+    // Fold in Additional Input when present, but unbolded: the real model
+    // paraphrases free text, so bolding would misrepresent it as verbatim.
     if (extra) {
-      paras.push(`You also mentioned: <strong>${esc(extra)}</strong> — I’ll be sure to weave that into our conversation.`);
+      paras.push(`You also mentioned: ${esc(extra)} — I’ll be sure to weave that into our conversation.`);
     }
     paras.push(`Looking forward to hearing from you.`);
     paras.push(`Warm regards,<br>Your Account Team`);

@@ -20,12 +20,23 @@ body {
 }
 /* Let the console chrome shrink / scroll internally instead of forcing the
    whole page to scroll horizontally on narrow viewports. */
+/* 3-column header: logo left, search centered on the page, actions right. */
 .slds-global-header {
   min-width: 0;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 440px) 1fr;
+  align-items: center;
+  gap: 1rem;
+}
+.slds-global-header__item:first-child {
+  justify-self: start;
+}
+.slds-global-header__item:last-child {
+  justify-self: end;
 }
 .slds-global-header__item_search {
   min-width: 0;
-  flex: 1 1 auto;
+  width: 100%;
 }
 .slds-context-bar__secondary {
   min-width: 0;
@@ -40,6 +51,25 @@ body {
 }
 .header-actions svg {
   fill: var(--slds-g-color-on-surface-2, #444);
+}
+/* Favourites: star + caret grouped in a rounded pill (as in the Figma). */
+.header-fav {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--slds-g-color-border-1, #d8d8d8);
+  border-radius: 999px;
+  padding: 0 0.125rem;
+}
+/* Logged-in user's profile picture. */
+.header-avatar {
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-left: 0.25rem;
+}
+.header-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* ---- Record header ---- */

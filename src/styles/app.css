@@ -126,6 +126,14 @@ body {
   border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
 }
 
+/* ---- Tooltips ---- */
+.tooltip-layer {
+  position: absolute;
+  z-index: 9000;
+  max-width: 20rem;
+  pointer-events: none; /* never sit between the cursor and the trigger */
+}
+
 /* ---- Utility bar ---- */
 .utility-bar {
   position: fixed;

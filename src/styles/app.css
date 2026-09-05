@@ -45,6 +45,21 @@ body {
 .app-logo {
   display: inline-flex;
   align-items: center;
+  gap: 0.5rem;
+}
+/* Infiwave Wireless waveform mark (reused from the Actions Launcher project). */
+.app-logo__mark {
+  width: 22px;
+  height: 22px;
+  color: #9e4c9c; /* wave strokes use currentColor */
+  fill: none;
+  flex: none;
+}
+.app-logo__name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--slds-g-color-on-surface-1, #181818);
+  white-space: nowrap;
 }
 .header-actions {
   gap: 0.25rem;

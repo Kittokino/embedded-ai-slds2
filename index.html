@@ -233,7 +233,7 @@
                 </div>
               </header>
               <div class="slds-no-flex">
-                <button class="slds-button slds-button_icon slds-button_icon-small" title="About this tool"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button>
+                <button class="slds-button slds-button_icon slds-button_icon-small ai-summary__info" title="About this tool"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button>
                 <button class="slds-button slds-button_icon slds-button_icon-small" title="Expand"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#expand"></use></svg></button>
               </div>
             </div>
@@ -287,19 +287,23 @@
 
               <!-- Prompt form state -->
               <div class="ai-summary__form" data-ai-form hidden>
-                <p class="ai-form__prompt">Prompt: <strong data-ai-prompt-label>Personalized Upsell Email</strong>
-                  <svg class="ai-form__caret" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
-                </p>
+                <div class="ai-prompt" data-prompt-switch>
+                  <button type="button" class="ai-prompt__trigger" data-prompt-trigger aria-haspopup="listbox" aria-expanded="false">Prompt: <strong class="ai-prompt__label" data-prompt-label>Personalized Upsell Email</strong>
+                    <svg class="ai-form__caret" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                  </button>
+                  <div class="ai-prompt__menu" data-prompt-menu hidden>
+                    <button type="button" class="ai-prompt__option" data-prompt-option>Personalized Upsell Email</button>
+                    <button type="button" class="ai-prompt__option" data-prompt-option>Pre-Call Briefing</button>
+                  </div>
+                </div>
 
                 <!-- Account (default record, read-only) -->
                 <div class="slds-form-element ai-field">
-                  <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr> Account</label>
+                  <label class="slds-form-element__label">Account</label>
                   <div class="ai-lookup is-disabled">
                     <span class="slds-icon_container slds-icon-standard-account ai-lookup__icon"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use></svg></span>
                     <span class="ai-lookup__value">Acme, Inc.</span>
-                    <button class="ai-lookup__action" type="button" title="Clear" disabled><svg class="ai-lookup__action-icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg></button>
                   </div>
-                  <p class="ai-field__help"><svg class="ai-field__help-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg> Default Page</p>
                 </div>
 
                 <!-- Opportunity (dropdown) -->
@@ -356,7 +360,7 @@
 
                 <!-- Footer -->
                 <div class="ai-summary__form-footer">
-                  <button class="slds-button slds-button_outline-brand" type="button" data-ai-back>Back</button>
+                  <button class="slds-button slds-button_icon slds-button_icon-border-filled ai-back" type="button" data-ai-back title="Back" aria-label="Back"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#back"></use></svg></button>
                   <button class="slds-button slds-button_brand ai-form__generate" type="button" disabled>
                     <svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>Generate
                   </button>
@@ -365,22 +369,31 @@
 
               <!-- Generated result state -->
               <div class="ai-summary__result" data-ai-result hidden>
-                <p class="ai-form__prompt">Prompt: <strong data-ai-result-label>Personalized Upsell Email</strong>
-                  <svg class="ai-form__caret" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
-                </p>
+                <div class="ai-prompt" data-prompt-switch>
+                  <button type="button" class="ai-prompt__trigger" data-prompt-trigger aria-haspopup="listbox" aria-expanded="false">Prompt: <strong class="ai-prompt__label" data-prompt-label>Personalized Upsell Email</strong>
+                    <svg class="ai-form__caret" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                  </button>
+                  <div class="ai-prompt__menu" data-prompt-menu hidden>
+                    <button type="button" class="ai-prompt__option" data-prompt-option>Personalized Upsell Email</button>
+                    <button type="button" class="ai-prompt__option" data-prompt-option>Pre-Call Briefing</button>
+                  </div>
+                </div>
                 <p class="ai-result__meta">Generated at <span data-ai-gentime>10:31 AM</span>
                   <button class="ai-result__regen" type="button" data-ai-regen title="Regenerate"><svg><use href="/assets/icons/utility-sprite/svg/symbols.svg#regenerate"></use></svg></button>
                 </p>
                 <div class="ai-result__body" data-ai-email></div>
                 <div class="ai-result__footer">
-                  <button class="slds-button slds-button_outline-brand ai-result__agentforce" type="button">
-                    <svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>Ask Agentforce
-                  </button>
+                  <div class="ai-result__footer-left">
+                    <button class="slds-button slds-button_icon slds-button_icon-border-filled ai-back" type="button" data-ai-back-result title="Back" aria-label="Back"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#back"></use></svg></button>
+                    <button class="slds-button slds-button_outline-brand ai-result__agentforce" type="button">
+                      <svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>Ask Agentforce
+                    </button>
+                  </div>
                   <div class="ai-result__actions">
                     <button class="slds-button slds-button_icon" type="button" title="Good response"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#like"></use></svg></button>
                     <button class="slds-button slds-button_icon" type="button" title="Bad response"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#dislike"></use></svg></button>
                     <button class="slds-button slds-button_icon" type="button" title="Edit"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#edit"></use></svg></button>
-                    <button class="slds-button slds-button_icon" type="button" title="Copy"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#copy"></use></svg></button>
+                    <button class="slds-button slds-button_icon" type="button" title="Copy" data-ai-copy><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#copy"></use></svg></button>
                   </div>
                 </div>
               </div>

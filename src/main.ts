@@ -81,19 +81,26 @@ function initAiSummary(): void {
   const form = card.querySelector<HTMLElement>("[data-ai-form]");
   const result = card.querySelector<HTMLElement>("[data-ai-result]");
   const loader = card.querySelector<HTMLElement>("[data-ai-loader]");
-  const label = card.querySelector<HTMLElement>("[data-ai-prompt-label]");
   const generateBtn = card.querySelector<HTMLButtonElement>(".ai-form__generate");
   const oppBox = card.querySelector<HTMLElement>('[data-field="opportunity"]');
   const contactBox = card.querySelector<HTMLElement>('[data-field="contact"]');
   const emailEl = card.querySelector<HTMLElement>("[data-ai-email]");
   const genTime = card.querySelector<HTMLElement>("[data-ai-gentime]");
-  const resultLabel = card.querySelector<HTMLElement>("[data-ai-result-label]");
+  const additionalInput = card.querySelector<HTMLTextAreaElement>(".ai-form__textarea");
+  const promptLabels = card.querySelectorAll<HTMLElement>("[data-prompt-label]");
   const LOADER_MS = 700;
+
+  const esc = (s: string): string =>
+    s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
+  // Keep the prompt label in sync across the form and result states.
+  const setPrompt = (text: string): void => {
+    promptLabels.forEach((el) => (el.textContent = text));
+  };
 
   const openForm = (promptText: string): void => {
     // Dismiss any lingering tooltip from the clicked prompt button.
     document.querySelector(".tooltip-layer")?.remove();
-    if (label) label.textContent = promptText;
+    setPrompt(promptText);
     // Keep the empty state in place under the overlay so height doesn't jump.
     if (loader) loader.hidden = false;
     window.setTimeout(() => {
@@ -135,22 +142,27 @@ function initAiSummary(): void {
   // Build the mock "generated" email using the selected contact's first name.
   const buildEmail = (): void => {
     if (!emailEl) return;
-    const first = (contactBox?.dataset.value ?? "there").split(" ")[0];
+    const first = esc((contactBox?.dataset.value ?? "there").split(" ")[0]);
     const account = "Acme";
-    const opp = oppBox?.dataset.value ?? "this opportunity";
+    const opp = esc(oppBox?.dataset.value ?? "this opportunity");
+    const extra = (additionalInput?.value ?? "").trim();
     const paras = [
       `Dear ${first},`,
       `I hope this message finds you well. Thank you for your continued interest in partnering with us — your support as a champion for ${account} has meant a great deal, and we’re excited about what we can build together.`,
-      `Given your interest in ${opp}, I’d love to explore how it can deliver real impact for your team. Based on results we’ve seen with similar organizations, this is a strong opportunity to build on the value you’re already getting.`,
+      // The opportunity is bolded to show the AI used the selected input.
+      `Given your interest in <strong>${opp}</strong>, I’d love to explore how it can deliver real impact for your team. Based on results we’ve seen with similar organizations, this is a strong opportunity to build on the value you’re already getting.`,
       `Would you be open to a short call this week to walk through the details and answer any questions? I’m confident we can shape a plan that fits ${account}’s goals.`,
-      `Looking forward to hearing from you.`,
-      `Warm regards,<br>Your Account Team`,
     ];
+    // Only fold in Additional Input when the user typed something (escaped).
+    if (extra) {
+      paras.push(`You also mentioned: <strong>${esc(extra)}</strong> — I’ll be sure to weave that into our conversation.`);
+    }
+    paras.push(`Looking forward to hearing from you.`);
+    paras.push(`Warm regards,<br>Your Account Team`);
     emailEl.innerHTML = paras.map((p) => `<p>${p}</p>`).join("");
   };
 
   const showResult = (): void => {
-    if (resultLabel && label) resultLabel.textContent = label.textContent;
     buildEmail();
     if (genTime) genTime.textContent = nowTime();
     if (loader) loader.hidden = false;
@@ -175,6 +187,82 @@ function initAiSummary(): void {
       buildEmail();
       if (genTime) genTime.textContent = nowTime();
     }, LOADER_MS);
+  });
+
+  // Result "Back" returns to the form (selections preserved for editing).
+  card.querySelector<HTMLElement>("[data-ai-back-result]")?.addEventListener("click", () => {
+    if (result) result.hidden = true;
+    if (loader) loader.hidden = true;
+    if (form) form.hidden = false;
+    card.dataset.state = "form";
+  });
+
+  // Copy the generated email to the clipboard, then show an SLDS toast.
+  const showToast = (message: string): void => {
+    let cont = document.querySelector<HTMLElement>(".app-toast");
+    if (!cont) {
+      cont = document.createElement("div");
+      cont.className = "app-toast";
+      document.body.appendChild(cont);
+    }
+    const box = cont;
+    const S = "/assets/icons/utility-sprite/svg/symbols.svg";
+    box.innerHTML =
+      `<div class="slds-notify slds-notify_toast slds-theme_success" role="status">` +
+      `<span class="slds-assistive-text">Success</span>` +
+      `<span class="slds-icon_container slds-icon-utility-success slds-m-right_small"><svg class="slds-icon slds-icon_small" aria-hidden="true"><use href="${S}#success"></use></svg></span>` +
+      `<div class="slds-notify__content"><h2 class="slds-text-heading_small">${message}</h2></div>` +
+      `<div class="slds-notify__close"><button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" data-toast-close><svg class="slds-button__icon"><use href="${S}#close"></use></svg></button></div>` +
+      `</div>`;
+    box.querySelector("[data-toast-close]")?.addEventListener("click", () => (box.innerHTML = ""));
+    window.clearTimeout(Number(box.dataset.timer));
+    box.dataset.timer = String(window.setTimeout(() => (box.innerHTML = ""), 3000));
+  };
+
+  card.querySelector<HTMLElement>("[data-ai-copy]")?.addEventListener("click", () => {
+    const text = emailEl?.innerText ?? "";
+    const done = (): void => showToast("Text copied to clipboard.");
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).then(done, done);
+    } else {
+      done();
+    }
+  });
+
+  // Prompt switcher (the chevron next to "Prompt:") — form and result states.
+  const promptSwitches = card.querySelectorAll<HTMLElement>("[data-prompt-switch]");
+  const closePromptMenus = (): void => {
+    promptSwitches.forEach((sw) => {
+      sw.classList.remove("is-open");
+      const menu = sw.querySelector<HTMLElement>("[data-prompt-menu]");
+      if (menu) menu.hidden = true;
+      sw.querySelector("[data-prompt-trigger]")?.setAttribute("aria-expanded", "false");
+    });
+  };
+  promptSwitches.forEach((sw) => {
+    const trigger = sw.querySelector<HTMLElement>("[data-prompt-trigger]");
+    const menu = sw.querySelector<HTMLElement>("[data-prompt-menu]");
+    trigger?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = sw.classList.contains("is-open");
+      closePromptMenus();
+      if (!open) {
+        sw.classList.add("is-open");
+        if (menu) menu.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+      }
+    });
+    sw.querySelectorAll<HTMLElement>("[data-prompt-option]").forEach((opt) => {
+      opt.addEventListener("click", (e) => {
+        e.stopPropagation();
+        setPrompt(opt.textContent!.trim());
+        closePromptMenus();
+      });
+    });
+  });
+  document.addEventListener("click", closePromptMenus);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closePromptMenus();
   });
 }
 

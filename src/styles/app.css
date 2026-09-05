@@ -267,6 +267,33 @@ body {
   font-size: 0.875rem;
   color: var(--slds-g-color-on-surface-1, #181818);
 }
+/* Opportunity dropdown */
+.ai-lookup__select {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--slds-g-color-on-surface-1, #181818);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+/* Muted placeholder while nothing is selected. */
+.ai-lookup__select:required:invalid {
+  color: #8e8e8e;
+}
+.ai-lookup__select option {
+  color: var(--slds-g-color-on-surface-1, #181818);
+}
+.ai-lookup__caret {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: none;
+  fill: var(--slds-g-color-on-surface-2, #5c5c5c);
+  pointer-events: none;
+}
 .ai-lookup__input::placeholder {
   color: var(--slds-g-color-on-surface-2, #747474);
 }

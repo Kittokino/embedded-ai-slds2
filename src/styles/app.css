@@ -133,8 +133,15 @@ body {
 }
 
 /* ---- Activity ---- */
+.activity-composer {
+  align-items: stretch;
+}
+.activity-composer > .slds-col {
+  display: flex;
+}
 .activity-composer .slds-button {
   white-space: nowrap;
+  height: 100%;
 }
 .timeline {
   display: flex;

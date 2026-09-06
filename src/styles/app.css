@@ -178,6 +178,43 @@ body {
 .ai-summary__prompt {
   border-radius: 999px;
 }
+/* "More" dropdown of extra prompts (overlay menu, anchored to the button). */
+.ai-more {
+  position: relative;
+}
+.ai-more__menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 20;
+  min-width: 13rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.25rem 0;
+  background: var(--slds-g-color-surface-1, #fff);
+  border: 1px solid var(--slds-g-color-border-1, #d0d0d0);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.ai-more__option {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--slds-g-color-on-surface-2, #181818);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ai-more__option:hover {
+  background: var(--slds-g-color-surface-container-3, #e5e5e5);
+}
+[data-prompt="more"] .slds-button__icon {
+  transition: transform 0.15s ease;
+}
+[data-prompt="more"].is-open .slds-button__icon {
+  transform: rotate(180deg);
+}
 
 /* ---- AI Summary: loader overlay ---- */
 .ai-summary__body {
@@ -655,6 +692,24 @@ body {
 .record-field dd {
   margin: 0;
   color: var(--slds-g-color-on-surface-2, #181818);
+}
+
+/* ---- Collapsible cards (double-click header to toggle) ---- */
+[data-collapsible].is-collapsed .slds-card__body,
+[data-collapsible].is-collapsed .slds-card__footer {
+  display: none;
+}
+[data-collapsible] .slds-card__header {
+  user-select: none; /* don't select the title text on double-click */
+}
+/* Line separating the header from the body. */
+.card-header-divided {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+[data-collapsible].is-collapsed .card-header-divided {
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 /* ---- Prompt switcher (form + result) ---- */

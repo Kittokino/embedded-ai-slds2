@@ -187,12 +187,15 @@
             </div>
           </article>
 
-          <!-- Activity / Timeline (minimal) -->
-          <article class="slds-card">
-            <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
+          <!-- Activity / Event History (minimal) -->
+          <article class="slds-card" data-collapsible>
+            <div class="slds-card__header slds-grid slds-grid_vertical-align-center card-header-divided">
               <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="widget-heading">Event History</span></h2></div>
               </header>
+              <div class="slds-no-flex">
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled card-header-action" title="Show more" aria-label="Show more"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button>
+              </div>
             </div>
             <div class="slds-card__body slds-card__body_inner">
               <div class="slds-m-bottom_small activity-composer">
@@ -286,9 +289,16 @@
                       <span>Pre-Call Briefing</span>
                       <svg class="slds-button__icon slds-button__icon_right ai-summary__spark"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>
                     </button>
-                    <button class="slds-button slds-button_neutral" data-prompt="more" data-tooltip="Browse more AI prompts you can run on this account.">More
-                      <svg class="slds-button__icon slds-button__icon_right"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
-                    </button>
+                    <div class="ai-more" data-more>
+                      <button class="slds-button slds-button_neutral" data-prompt="more" data-tooltip="Browse more AI prompts you can run on this account." aria-haspopup="menu" aria-expanded="false">More
+                        <svg class="slds-button__icon slds-button__icon_right"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                      </button>
+                      <div class="ai-more__menu" data-more-menu role="menu" hidden>
+                        <button class="ai-more__option" type="button" role="menuitem" data-prompt="account-summary"><span>Account Summary</span></button>
+                        <button class="ai-more__option" type="button" role="menuitem" data-prompt="next-steps"><span>Recommended Next Steps</span></button>
+                        <button class="ai-more__option" type="button" role="menuitem" data-prompt="renewal-risk"><span>Renewal Risk Assessment</span></button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -442,7 +452,7 @@
           </article>
 
           <!-- Contacts (minimal) -->
-          <article class="slds-card">
+          <article class="slds-card" data-collapsible>
             <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
               <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
@@ -465,7 +475,7 @@
           </article>
 
           <!-- Opportunities -->
-          <article class="slds-card">
+          <article class="slds-card is-collapsed" data-collapsible>
             <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
               <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">

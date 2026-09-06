@@ -113,11 +113,37 @@ function initAiSummary(): void {
   };
 
   card.querySelectorAll<HTMLElement>("[data-prompt]").forEach((btn) => {
-    if (btn.dataset.prompt === "more") return; // no form for "More" yet
+    if (btn.dataset.prompt === "more") return; // "More" toggles extra prompts, below
     btn.addEventListener("click", () => {
       const text = btn.querySelector("span")?.textContent?.trim() ?? "Personalized Upsell Email";
       openForm(text);
     });
+  });
+
+  // "More" opens a dropdown menu of additional predefined prompts.
+  const moreBtn = card.querySelector<HTMLElement>('[data-prompt="more"]');
+  const moreMenu = card.querySelector<HTMLElement>("[data-more-menu]");
+  const closeMore = (): void => {
+    if (!moreMenu) return;
+    moreMenu.hidden = true;
+    moreBtn?.classList.remove("is-open");
+    moreBtn?.setAttribute("aria-expanded", "false");
+  };
+  moreBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (!moreMenu) return;
+    const show = moreMenu.hidden;
+    moreMenu.hidden = !show;
+    moreBtn.classList.toggle("is-open", show);
+    moreBtn.setAttribute("aria-expanded", String(show));
+  });
+  moreMenu?.addEventListener("click", (e) => e.stopPropagation());
+  moreMenu?.querySelectorAll<HTMLElement>("[data-prompt]").forEach((opt) => {
+    opt.addEventListener("click", closeMore);
+  });
+  document.addEventListener("click", closeMore);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeMore();
   });
 
   card.querySelector<HTMLElement>("[data-ai-back]")?.addEventListener("click", () => {
@@ -394,3 +420,15 @@ function initSources(): void {
 }
 
 initSources();
+
+/** Collapsible cards: double-click the header to expand/collapse the card. */
+function initCollapsibleCards(): void {
+  document.querySelectorAll<HTMLElement>("[data-collapsible]").forEach((card) => {
+    const header = card.querySelector<HTMLElement>(".slds-card__header");
+    header?.addEventListener("dblclick", () => {
+      card.classList.toggle("is-collapsed");
+    });
+  });
+}
+
+initCollapsibleCards();

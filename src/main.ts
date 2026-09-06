@@ -378,3 +378,19 @@ function initPresenterCue(): void {
 }
 
 initPresenterCue();
+
+/** Collapsible "Sources" section in the AI Summary result. */
+function initSources(): void {
+  document.querySelectorAll<HTMLElement>("[data-sources-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const section = btn.closest<HTMLElement>(".ai-result__sources");
+      const list = section?.querySelector<HTMLElement>("[data-sources-list]");
+      if (!section || !list) return;
+      const collapsed = section.classList.toggle("is-collapsed");
+      list.hidden = collapsed;
+      btn.setAttribute("aria-expanded", String(!collapsed));
+    });
+  });
+}
+
+initSources();

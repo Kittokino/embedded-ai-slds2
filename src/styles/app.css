@@ -460,12 +460,106 @@ body {
   height: 1rem;
   fill: var(--slds-g-color-accent-2, #0b5cab);
 }
-.ai-result__body {
+/* Scrollable region so long generations don't blow out the widget height. */
+.ai-result__scroll {
+  max-height: 22rem;
+  overflow-y: auto;
   border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
   padding-top: 1rem;
+}
+.ai-result__body {
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--slds-g-color-on-surface-1, #181818);
+}
+
+/* ---- AI Summary: sources ---- */
+.ai-result__sources {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+.ai-sources__toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--slds-g-color-on-surface-2, #181818);
+}
+.ai-sources__caret {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: var(--slds-g-color-on-surface-1, #5c5c5c);
+  transition: transform 0.15s ease;
+}
+.ai-result__sources.is-collapsed .ai-sources__caret {
+  transform: rotate(-90deg);
+}
+.ai-sources__list {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ai-source {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+.ai-source__badge {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.ai-source__badge svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: #fff;
+}
+.ai-source__badge_account { background: #2e844a; }
+.ai-source__badge_file { background: #5867e8; }
+.ai-source__badge_link { background: #e5567b; }
+.ai-source__text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.375rem;
+  min-width: 0;
+}
+.ai-source__name {
+  font-size: 0.875rem;
+  color: var(--slds-g-color-accent-2, #0b5cab);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.ai-source__name:hover {
+  text-decoration: underline;
+}
+.ai-source__ext {
+  width: 0.7rem;
+  height: 0.7rem;
+  fill: currentColor;
+}
+.ai-source__type {
+  font-size: 0.8rem;
+  color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+.ai-source__type::before {
+  content: "·";
+  margin-right: 0.375rem;
 }
 .ai-result__body p {
   margin: 0 0 1rem;

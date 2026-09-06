@@ -381,7 +381,31 @@
                 <p class="ai-result__meta">Generated at <span data-ai-gentime>10:31 AM</span>
                   <button class="ai-result__regen" type="button" data-ai-regen title="Regenerate"><svg><use href="/assets/icons/utility-sprite/svg/symbols.svg#regenerate"></use></svg></button>
                 </p>
-                <div class="ai-result__body" data-ai-email></div>
+                <div class="ai-result__scroll">
+                  <div class="ai-result__body" data-ai-email></div>
+
+                  <!-- Sources the generation drew from -->
+                  <div class="ai-result__sources">
+                    <button class="ai-sources__toggle" type="button" data-sources-toggle aria-expanded="true">
+                      <svg class="ai-sources__caret" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                      <span>Sources (3)</span>
+                    </button>
+                    <ul class="ai-sources__list" data-sources-list>
+                      <li class="ai-source">
+                        <span class="ai-source__badge ai-source__badge_account"><svg aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#company"></use></svg></span>
+                        <div class="ai-source__text"><a href="#" class="ai-source__name">Acme, Inc.</a><span class="ai-source__type">Account</span></div>
+                      </li>
+                      <li class="ai-source">
+                        <span class="ai-source__badge ai-source__badge_file"><svg aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#page"></use></svg></span>
+                        <div class="ai-source__text"><a href="#" class="ai-source__name">Call_Transcript_24_July_2025.pdf</a><span class="ai-source__type">File</span></div>
+                      </li>
+                      <li class="ai-source">
+                        <span class="ai-source__badge ai-source__badge_link"><svg aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#world"></use></svg></span>
+                        <div class="ai-source__text"><a href="#" class="ai-source__name">wikipedia.com <svg class="ai-source__ext" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#new_window"></use></svg></a><span class="ai-source__type">External Link</span></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
                 <div class="ai-result__footer">
                   <div class="ai-result__footer-left">
                     <button class="slds-button slds-button_icon slds-button_icon-border-filled ai-back" type="button" data-ai-back-result title="Back" aria-label="Back"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#back"></use></svg></button>

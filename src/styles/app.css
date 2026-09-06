@@ -667,13 +667,16 @@ body {
 /* ---- Toast ---- */
 .app-toast {
   position: fixed;
-  /* Sit clear below the sticky global header, not over it. */
-  top: 4.5rem;
+  /* Top flush with the header's bottom edge (~51px sticky global header). */
+  top: 3.2rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 9999;
   width: max-content;
   max-width: 90vw;
+}
+.app-toast .slds-notify {
+  margin: 0; /* let .app-toast's top control the visible top edge exactly */
 }
 
 /* ---- Presenter feature cue: gentle pulsing ring on the AI Summary ---- */

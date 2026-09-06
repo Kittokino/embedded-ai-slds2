@@ -195,11 +195,11 @@
               </header>
             </div>
             <div class="slds-card__body slds-card__body_inner">
-              <div class="slds-grid slds-m-bottom_small activity-composer">
-                <div class="slds-col"><button class="slds-button slds-button_neutral slds-button_stretch"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#call"></use></svg>Log a Call</button></div>
-                <div class="slds-col"><button class="slds-button slds-button_neutral slds-button_stretch"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#email"></use></svg>Email</button></div>
-                <div class="slds-col"><button class="slds-button slds-button_neutral slds-button_stretch"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#event"></use></svg>New Event</button></div>
-                <div class="slds-col slds-grow-none"><button class="slds-button slds-button_neutral"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#task"></use></svg></button></div>
+              <div class="slds-m-bottom_small activity-composer">
+                <button class="slds-button slds-button_neutral"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#call"></use></svg>Log a Call</button>
+                <button class="slds-button slds-button_neutral"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#email"></use></svg>Email</button>
+                <button class="slds-button slds-button_neutral"><svg class="slds-button__icon slds-button__icon_left"><use href="/assets/icons/utility-sprite/svg/symbols.svg#event"></use></svg>New Event</button>
+                <button class="slds-button slds-button_neutral"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#task"></use></svg></button>
               </div>
 
               <p class="slds-text-body_small slds-text-color_weak slds-m-bottom_small">Filters: All time &middot; All activities &middot; All types</p>
@@ -232,6 +232,7 @@
                 </li>
               </ul>
             </div>
+            <footer class="slds-card__footer card-view-all"><a href="#">View All</a></footer>
           </article>
         </div>
 
@@ -276,12 +277,12 @@
                 <h3 class="slds-text-heading_small slds-text-align_center slds-m-bottom_medium">Start with a prompt</h3>
 
                 <div class="ai-summary__prompts">
-                  <button class="slds-button slds-button_outline-brand ai-summary__prompt" data-prompt="upsell" data-tooltip="Draft a personalized email suggesting relevant add-ons and upgrades for this account.">
+                  <button class="slds-button slds-button_neutral ai-summary__prompt" data-prompt="upsell" data-tooltip="Draft a personalized email suggesting relevant add-ons and upgrades for this account.">
                     <span>Personalized Upsell Email</span>
                     <svg class="slds-button__icon slds-button__icon_right ai-summary__spark"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>
                   </button>
                   <div class="ai-summary__prompt-row">
-                    <button class="slds-button slds-button_outline-brand ai-summary__prompt" data-prompt="briefing" data-tooltip="Generate a quick pre-call briefing summarizing this account's status, key contacts, and recent activity.">
+                    <button class="slds-button slds-button_neutral ai-summary__prompt" data-prompt="briefing" data-tooltip="Generate a quick pre-call briefing summarizing this account's status, key contacts, and recent activity.">
                       <span>Pre-Call Briefing</span>
                       <svg class="slds-button__icon slds-button__icon_right ai-summary__spark"><use href="/assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>
                     </button>
@@ -447,8 +448,11 @@
                 <div class="slds-media__figure">
                   <span class="slds-icon_container slds-icon-standard-contact"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span>
                 </div>
-                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="widget-heading">Contacts (3)</span></h2></div>
+                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="widget-heading">Contacts (5)</span></h2></div>
               </header>
+              <div class="slds-no-flex">
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled card-header-action" title="Show more" aria-label="Show more"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button>
+              </div>
             </div>
             <div class="slds-card__body">
               <ul class="contact-list">
@@ -457,6 +461,31 @@
                 <li class="contact-list__item"><span class="slds-icon_container slds-icon-standard-contact"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span><div><a href="#">Priya Nair</a><p class="slds-text-body_small slds-text-color_weak">Procurement Lead &middot; Buyer</p></div></li>
               </ul>
             </div>
+            <footer class="slds-card__footer card-view-all"><a href="#">View All</a></footer>
+          </article>
+
+          <!-- Opportunities -->
+          <article class="slds-card">
+            <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__figure">
+                  <span class="slds-icon_container slds-icon-standard-opportunity"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use></svg></span>
+                </div>
+                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="widget-heading">Opportunities (1)</span></h2></div>
+              </header>
+              <div class="slds-no-flex">
+                <button class="slds-button slds-button_icon slds-button_icon-border-filled card-header-action" title="Show more" aria-label="Show more"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button>
+              </div>
+            </div>
+            <div class="slds-card__body slds-card__body_inner">
+              <a href="#" class="opp-name">Acme - New Business Opportunity</a>
+              <dl class="record-fields">
+                <div class="record-field"><dt>Stage:</dt><dd>Meet &amp; Present</dd></div>
+                <div class="record-field"><dt>Amount:</dt><dd>$10,000.00</dd></div>
+                <div class="record-field"><dt>Close Date:</dt><dd>6/26/2024</dd></div>
+              </dl>
+            </div>
+            <footer class="slds-card__footer card-view-all"><a href="#">View All</a></footer>
           </article>
         </div>
       </div>

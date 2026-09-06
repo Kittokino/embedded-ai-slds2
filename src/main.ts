@@ -344,3 +344,37 @@ function initComboboxes(): void {
 }
 
 initComboboxes();
+
+/**
+ * Presenter feature cue: Ctrl+H or Shift+H toggles a gentle pulsing ring on
+ * the AI Summary widget; Esc clears it. Ignored while typing in a field.
+ */
+function initPresenterCue(): void {
+  const card = document.querySelector<HTMLElement>("#ai-summary");
+  if (!card) return;
+
+  const isTyping = (t: EventTarget | null): boolean => {
+    const el = t as HTMLElement | null;
+    return (
+      !!el &&
+      (el.tagName === "INPUT" ||
+        el.tagName === "TEXTAREA" ||
+        el.tagName === "SELECT" ||
+        el.isContentEditable)
+    );
+  };
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      card.classList.remove("ai-cue");
+      return;
+    }
+    if ((e.key === "h" || e.key === "H") && (e.ctrlKey || e.shiftKey) && !e.metaKey && !e.altKey) {
+      if (isTyping(e.target)) return;
+      e.preventDefault(); // suppress Ctrl+H (browser history)
+      card.classList.toggle("ai-cue");
+    }
+  });
+}
+
+initPresenterCue();

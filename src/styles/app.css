@@ -574,6 +574,26 @@ body {
   max-width: 90vw;
 }
 
+/* ---- Presenter feature cue: gentle pulsing ring on the AI Summary ---- */
+@keyframes ai-cue-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px var(--slds-g-color-accent-1, #066afe), 0 0 12px 2px rgba(6, 106, 254, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 5px var(--slds-g-color-accent-1, #066afe), 0 0 20px 5px rgba(6, 106, 254, 0.55);
+  }
+}
+.ai-cue {
+  animation: ai-cue-pulse 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ai-cue {
+    animation: none;
+    box-shadow: 0 0 0 4px var(--slds-g-color-accent-1, #066afe), 0 0 16px 4px rgba(6, 106, 254, 0.45);
+  }
+}
+
 /* ---- Contacts ---- */
 .contact-list {
   display: flex;

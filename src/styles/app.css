@@ -135,6 +135,7 @@ body {
 /* ---- Activity ---- */
 .activity-composer {
   align-items: stretch;
+  gap: 0.5rem; /* match the AI Summary prompt-row button gap */
 }
 .activity-composer > .slds-col {
   display: flex;

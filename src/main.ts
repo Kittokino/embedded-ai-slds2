@@ -598,17 +598,25 @@ function initExpand(): void {
   const toggle = card?.querySelector<HTMLElement>("[data-expand-toggle]");
   if (!card || !modal || !slot || !toggle) return;
 
+  const toggleIcon = toggle.querySelector("use");
+  const S = "/assets/icons/utility-sprite/svg/symbols.svg";
   let placeholder: Comment | null = null;
   const expand = (): void => {
     placeholder = document.createComment("ai-summary-slot");
     card.parentNode?.insertBefore(placeholder, card);
     slot.appendChild(card);
+    card.classList.add("is-expanded");
+    toggleIcon?.setAttribute("href", `${S}#contract_alt`);
+    toggle.setAttribute("title", "Collapse");
     modal.hidden = false;
   };
   const collapse = (): void => {
     if (placeholder?.parentNode) placeholder.parentNode.insertBefore(card, placeholder);
     placeholder?.remove();
     placeholder = null;
+    card.classList.remove("is-expanded");
+    toggleIcon?.setAttribute("href", `${S}#expand_alt`);
+    toggle.setAttribute("title", "Expand");
     modal.hidden = true;
   };
 

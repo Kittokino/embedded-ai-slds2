@@ -239,9 +239,9 @@ body {
 .expand-modal__dialog {
   position: relative;
   z-index: 1;
-  width: 26rem;
+  width: 39rem; /* 26rem grown 50% */
   max-width: 94vw;
-  height: 30rem; /* slightly taller than wide, like the widget on the page */
+  height: 45rem; /* 30rem grown 50%; slightly taller than wide */
   max-height: 92vh;
   display: flex;
   border-radius: 0.5rem;
@@ -263,6 +263,17 @@ body {
 .expand-modal .ai-summary__body {
   flex: 1;
   overflow-y: auto;
+}
+/* Expanded: surface the extra prompts as buttons and drop them from "More". */
+.ai-prompt-extra {
+  display: none;
+}
+.ai-summary.is-expanded .ai-prompt-extra {
+  display: inline-flex;
+}
+.ai-summary.is-expanded [data-more-menu] [data-prompt="account-summary"],
+.ai-summary.is-expanded [data-more-menu] [data-prompt="next-steps"] {
+  display: none;
 }
 
 /* ---- Prompt Templates modal (SLDS dueling list) ---- */

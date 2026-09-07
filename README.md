@@ -3,7 +3,8 @@
 A front-end prototype exploring embedded AI experiences, built on the
 **Salesforce Lightning Design System 2** (global styling hooks, `--slds-g-*`).
 
-> Private work in progress — not yet ready to share.
+> An independent, non-commercial UX concept exploration. See the disclaimer and
+> third-party attribution at the bottom.
 
 ## Stack
 
@@ -12,9 +13,10 @@ A front-end prototype exploring embedded AI experiences, built on the
   — the `dist/css/bundled/slds2.cosmos.css` bundle (component structure + Cosmos theme tokens +
   `--slds-g-*` global styling hooks). Swappable with the `lightning-blue` theme, and modular
   base+theme files exist for runtime theme switching.
-- SLDS **icon sprites & images** come from [`@salesforce-ux/design-system`](https://www.npmjs.com/package/@salesforce-ux/design-system)
-  (the `-2` package doesn't ship icon sprites); they're served from `node_modules` at dev time and
-  copied into the build via `vite-plugin-static-copy` (see `vite.config.ts`).
+- SLDS **icon sprites** are vendored under `public/assets/icons/` (the `-2` package doesn't ship
+  icon sprites; these come unmodified from `@salesforce-ux/design-system`, licensed CC BY-ND 4.0 —
+  see [Third-party attribution](#third-party-attribution)). Vite serves `public/` at the site root
+  as-is in dev and build, so no copy plugin is needed.
 
 ## Getting started
 
@@ -46,9 +48,26 @@ src/
   hard-coded colors/spacing, so the UI stays theme- and dark-mode-ready.
 - Reference icons via the sprite sheets under `/assets/icons/...#<name>`.
 
+## Third-party attribution
+
+This prototype uses assets and styles from the Salesforce Lightning Design System:
+
+- **SLDS icon sprites** (`public/assets/icons/**`) — © Salesforce, Inc., licensed under
+  [Creative Commons Attribution-NoDerivatives 4.0](https://creativecommons.org/licenses/by-nd/4.0/).
+  Redistributed here **unmodified**.
+- **SLDS 2 CSS** (`@salesforce-ux/design-system-2`, pulled via npm and bundled into `dist/` at build
+  time) — © Salesforce, Inc., provided under the Salesforce Terms of Use in that package's
+  `LICENSE.txt`. Anyone redistributing a build should include those terms.
+
+All product/company names, records, and content shown in the UI (e.g. "Infiwave Wireless",
+"Acme, Inc.") are **fictional** and for demonstration only. The profile avatar is drawn purely in
+CSS (initials on a solid fill) — no image assets, so nothing here carries a third-party image
+license.
+
 ---
 
-Built by [@kittokino](https://github.com/kittokino).
+Built by [@kittokino](https://github.com/kittokino). Application code is released under the MIT
+License (see `LICENSE`); third-party assets remain under their respective licenses noted above.
 
 **Disclaimer:** This project is an independent, non-commercial UX prototype and concept
 exploration. It is not affiliated with, endorsed by, or sponsored by Salesforce, Inc.

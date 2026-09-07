@@ -221,6 +221,50 @@ body {
   background: var(--slds-g-color-border-container-1, #ececec);
 }
 
+/* ---- Expanded AI Summary (the widget opened as a modal) ---- */
+.expand-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.expand-modal .slds-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+.expand-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: 26rem;
+  max-width: 94vw;
+  height: 30rem; /* slightly taller than wide, like the widget on the page */
+  max-height: 92vh;
+  display: flex;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+.expand-modal__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+.expand-modal .ai-summary {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.expand-modal .ai-summary__body {
+  flex: 1;
+  overflow-y: auto;
+}
+
 /* ---- Prompt Templates modal (SLDS dueling list) ---- */
 .pin-modal .slds-modal__container {
   max-width: 46.25rem; /* 740px — 640 + 50px each side */

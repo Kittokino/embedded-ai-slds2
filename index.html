@@ -254,7 +254,7 @@
               </header>
               <div class="slds-no-flex">
                 <button class="slds-button slds-button_icon slds-button_icon-small" title="About this tool"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button>
-                <button class="slds-button slds-button_icon slds-button_icon-small" title="Expand"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#expand"></use></svg></button>
+                <button class="slds-button slds-button_icon slds-button_icon-small" title="Expand" data-expand-toggle><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#expand"></use></svg></button>
               </div>
             </div>
 
@@ -548,6 +548,14 @@
         </div>
       </section>
       <div class="slds-backdrop slds-backdrop_open" data-pin-close></div>
+    </div>
+
+    <!-- ==================== EXPANDED AI SUMMARY MODAL ==================== -->
+    <div class="expand-modal" data-expand-modal hidden>
+      <div class="slds-backdrop slds-backdrop_open" data-expand-close></div>
+      <div class="expand-modal__dialog" role="dialog" aria-modal="true" aria-label="AI Summary">
+        <div class="expand-modal__body" data-expand-slot></div>
+      </div>
     </div>
 
     <!-- ============================ UTILITY BAR ============================ -->

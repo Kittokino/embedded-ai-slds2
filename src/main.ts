@@ -585,3 +585,41 @@ function initPinPrompts(): void {
 }
 
 initPinPrompts();
+
+/**
+ * Expand: move the whole AI Summary widget into a modal (keeping all its wired
+ * interactions, since it's the same DOM node); the Expand button, backdrop, or
+ * Escape returns it to its place on the page.
+ */
+function initExpand(): void {
+  const card = document.querySelector<HTMLElement>("#ai-summary");
+  const modal = document.querySelector<HTMLElement>("[data-expand-modal]");
+  const slot = modal?.querySelector<HTMLElement>("[data-expand-slot]");
+  const toggle = card?.querySelector<HTMLElement>("[data-expand-toggle]");
+  if (!card || !modal || !slot || !toggle) return;
+
+  let placeholder: Comment | null = null;
+  const expand = (): void => {
+    placeholder = document.createComment("ai-summary-slot");
+    card.parentNode?.insertBefore(placeholder, card);
+    slot.appendChild(card);
+    modal.hidden = false;
+  };
+  const collapse = (): void => {
+    if (placeholder?.parentNode) placeholder.parentNode.insertBefore(card, placeholder);
+    placeholder?.remove();
+    placeholder = null;
+    modal.hidden = true;
+  };
+
+  toggle.addEventListener("click", () => (modal.hidden ? expand() : collapse()));
+  modal.querySelectorAll<HTMLElement>("[data-expand-close]").forEach((b) => b.addEventListener("click", collapse));
+  document.addEventListener("keydown", (e) => {
+    // Let an open Prompt Templates modal take Escape first.
+    if (e.key === "Escape" && !modal.hidden && document.querySelector<HTMLElement>("[data-pin-modal]")?.hidden !== false) {
+      collapse();
+    }
+  });
+}
+
+initExpand();

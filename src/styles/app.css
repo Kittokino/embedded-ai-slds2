@@ -53,6 +53,16 @@ body {
   min-width: 0;
   overflow-x: auto;
 }
+/* App name beside the waffle: drop the SLDS divider border (reads as a button
+   edge) and give the label even breathing room on both sides so it isn't
+   cramped against the waffle icon. */
+.slds-context-bar__primary .slds-context-bar__item_divider-right {
+  border-right: none;
+}
+.slds-context-bar__app-name {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 .app-logo {
   display: inline-flex;
   align-items: center;

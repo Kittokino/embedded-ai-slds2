@@ -10,4 +10,12 @@ import { defineConfig } from "vite";
 // The app is a single page, so relative references resolve against the page URL.
 export default defineConfig({
   base: "./",
+  build: {
+    // Target browsers that support the CSS `light-dark()` function natively, so
+    // the (Lightning CSS) minifier leaves it intact. Without this it transpiled
+    // the SLDS 2 `light-dark()` surface tokens into a broken helper-var polyfill,
+    // collapsing every surface color to an invalid value (page/cards went
+    // transparent → all white). These match the browsers the README requires.
+    cssTarget: ["chrome123", "safari17.5", "firefox120", "edge123"],
+  },
 });

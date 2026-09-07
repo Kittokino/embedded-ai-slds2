@@ -239,9 +239,9 @@ body {
 .expand-modal__dialog {
   position: relative;
   z-index: 1;
-  width: 39rem; /* 26rem grown 50% */
+  width: 40rem;
   max-width: 94vw;
-  height: 45rem; /* 30rem grown 50%; slightly taller than wide */
+  height: 44rem; /* slightly taller than wide */
   max-height: 92vh;
   display: flex;
   border-radius: 0.5rem;
@@ -275,10 +275,50 @@ body {
 .ai-summary.is-expanded [data-more-menu] [data-prompt="next-steps"] {
   display: none;
 }
+/*
+ * Expanded modal prompt order: Personalized Upsell Email, Pre-Call Briefing,
+ * Account Summary, Recommended Next Steps, More. The briefing + More share a
+ * row when collapsed; unwrapping that row (display: contents) lets all five
+ * buttons flow into the single centered column so `order` can sequence them.
+ */
+.ai-summary.is-expanded .ai-summary__prompt-row {
+  display: contents;
+}
+.ai-summary.is-expanded [data-prompt="upsell"] {
+  order: 1;
+}
+.ai-summary.is-expanded [data-prompt="briefing"] {
+  order: 2;
+}
+.ai-summary.is-expanded .ai-prompt-extra[data-prompt="account-summary"] {
+  order: 3;
+}
+.ai-summary.is-expanded .ai-prompt-extra[data-prompt="next-steps"] {
+  order: 4;
+}
+.ai-summary.is-expanded .ai-more {
+  order: 5;
+}
 
 /* ---- Prompt Templates modal (SLDS dueling list) ---- */
 .pin-modal .slds-modal__container {
   max-width: 46.25rem; /* 740px — 640 + 50px each side */
+}
+/*
+ * Close (X) button sits over the dark backdrop at the top-right. The Cosmos
+ * default paints it as a white filled circle, which hides the white X. Clear
+ * the fill/border so only the white X shows against the backdrop.
+ */
+.pin-modal .slds-modal__close,
+.pin-modal .slds-modal__close:hover,
+.pin-modal .slds-modal__close:focus,
+.pin-modal .slds-modal__close:active {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.pin-modal .slds-modal__close .slds-button__icon {
+  fill: #fff;
 }
 .pin-modal__desc {
   margin: 0.5rem auto 0;

@@ -48,9 +48,16 @@ function initTooltips(): void {
     tip.style.top = `${top}px`;
   };
 
+  const SHOW_DELAY = 250; // ms before a tooltip appears
+  let timer: number | undefined;
+
   document.querySelectorAll<HTMLElement>("[data-tooltip]").forEach((trigger) => {
-    const open = () => show(trigger);
+    const open = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => show(trigger), SHOW_DELAY);
+    };
     const close = () => {
+      window.clearTimeout(timer);
       trigger.removeAttribute("aria-describedby");
       hide();
     };
@@ -58,6 +65,8 @@ function initTooltips(): void {
     trigger.addEventListener("mouseleave", close);
     trigger.addEventListener("focus", open);
     trigger.addEventListener("blur", close);
+    // Clicking the trigger dismisses the tooltip (and cancels a pending one).
+    trigger.addEventListener("click", close);
   });
 
   // Dismiss on Escape for keyboard users.

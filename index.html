@@ -297,6 +297,8 @@
                         <button class="ai-more__option" type="button" role="menuitem" data-prompt="account-summary"><span>Account Summary</span></button>
                         <button class="ai-more__option" type="button" role="menuitem" data-prompt="next-steps"><span>Recommended Next Steps</span></button>
                         <button class="ai-more__option" type="button" role="menuitem" data-prompt="renewal-risk"><span>Renewal Risk Assessment</span></button>
+                        <div class="ai-more__separator" role="separator"></div>
+                        <button class="ai-more__option" type="button" role="menuitem" data-edit-pinned><span>Edit pinned prompts</span></button>
                       </div>
                     </div>
                   </div>
@@ -505,6 +507,43 @@
           </article>
         </div>
       </div>
+    </div>
+
+    <!-- ==================== EDIT PINNED PROMPTS MODAL ==================== -->
+    <div class="pin-modal" data-pin-modal hidden>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="pin-heading" aria-describedby="pin-desc" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" data-pin-close title="Close">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <div class="slds-modal__header">
+            <h1 id="pin-heading" class="slds-modal__title slds-hyphenate">Edit Pinned Prompts</h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium">
+            <p id="pin-desc" class="slds-m-bottom_medium slds-text-color_weak">Pick the prompts to show under &ldquo;More&rdquo;, and set their order. You can pin up to 10.</p>
+            <div class="pin-dueling">
+              <section class="pin-panel">
+                <header class="pin-panel__head"><span class="pin-panel__title">Available prompts</span><span class="pin-panel__count" data-avail-count></span></header>
+                <div class="pin-panel__search">
+                  <svg class="pin-panel__search-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use></svg>
+                  <input type="text" class="pin-panel__search-input" placeholder="Search prompts&hellip;" data-pin-search aria-label="Search prompts" />
+                </div>
+                <ul class="pin-list" data-avail-list></ul>
+              </section>
+              <section class="pin-panel">
+                <header class="pin-panel__head"><span class="pin-panel__title">Pinned prompts</span><span class="pin-panel__count" data-pinned-count></span></header>
+                <ul class="pin-list" data-pinned-list></ul>
+              </section>
+            </div>
+          </div>
+          <div class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" type="button" data-pin-close>Cancel</button>
+            <button class="slds-button slds-button_brand" type="button" data-pin-save>Save</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" data-pin-close></div>
     </div>
 
     <!-- ============================ UTILITY BAR ============================ -->

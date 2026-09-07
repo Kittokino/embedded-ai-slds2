@@ -432,3 +432,134 @@ function initCollapsibleCards(): void {
 }
 
 initCollapsibleCards();
+
+/**
+ * "Edit Pinned Prompts" modal — a dueling picklist. Left panel lists all
+ * available prompts (with a pin button); right panel shows the pinned set with
+ * reorder/remove. Cancel discards; Save commits the working order.
+ */
+function initPinPrompts(): void {
+  const modal = document.querySelector<HTMLElement>("[data-pin-modal]");
+  if (!modal) return;
+
+  const availList = modal.querySelector<HTMLElement>("[data-avail-list]")!;
+  const pinnedList = modal.querySelector<HTMLElement>("[data-pinned-list]")!;
+  const availCount = modal.querySelector<HTMLElement>("[data-avail-count]")!;
+  const pinnedCount = modal.querySelector<HTMLElement>("[data-pinned-count]")!;
+  const searchInput = modal.querySelector<HTMLInputElement>("[data-pin-search]");
+
+  interface Prompt { id: string; label: string; cat: string; }
+  const PROMPTS: Prompt[] = [
+    { id: "upsell", label: "Personalized Upsell Email", cat: "EMAIL" },
+    { id: "briefing", label: "Pre-Call Briefing", cat: "PREP" },
+    { id: "account-summary", label: "Account Summary", cat: "INSIGHT" },
+    { id: "next-steps", label: "Recommended Next Steps", cat: "ACTION" },
+    { id: "renewal-risk", label: "Renewal Risk Assessment", cat: "RISK" },
+    { id: "battlecard", label: "Competitive Battlecard", cat: "INSIGHT" },
+    { id: "followup", label: "Meeting Follow-up Email", cat: "EMAIL" },
+    { id: "stakeholder", label: "Stakeholder Map", cat: "INSIGHT" },
+    { id: "deal-risk", label: "Deal Risk Analysis", cat: "RISK" },
+    { id: "objection", label: "Objection Handling", cat: "PREP" },
+  ];
+  const MAX = 10;
+  const S = "/assets/icons/utility-sprite/svg/symbols.svg";
+  let committed: string[] = ["upsell", "briefing", "account-summary", "next-steps", "renewal-risk"];
+  let working: string[] = [...committed];
+  let query = "";
+
+  const byId = (id: string): Prompt | undefined => PROMPTS.find((p) => p.id === id);
+  const icon = (name: string, cls = ""): string =>
+    `<svg${cls ? ` class="${cls}"` : ""} aria-hidden="true"><use href="${S}#${name}"></use></svg>`;
+  const badge = (cat: string): string =>
+    `<span class="pin-badge pin-badge_${cat.toLowerCase()}">${cat}</span>`;
+
+  const render = (): void => {
+    const q = query.trim().toLowerCase();
+    const avail = PROMPTS.filter((p) => p.label.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q));
+    availCount.textContent = `${PROMPTS.length} available`;
+    availList.innerHTML = avail
+      .map((p) => {
+        const isPinned = working.includes(p.id);
+        const disabled = isPinned || working.length >= MAX;
+        const btnIcon = isPinned ? icon("check") : icon("add");
+        return `<li class="pin-item">${icon("sparkles", "pin-item__icon")}<span class="pin-item__label">${p.label}</span>${badge(p.cat)}<button class="pin-item__btn pin-item__btn_add" type="button" title="Pin" data-add="${p.id}"${disabled ? " disabled" : ""}>${btnIcon}</button></li>`;
+      })
+      .join("");
+
+    pinnedCount.textContent = `${working.length} of ${MAX}`;
+    pinnedList.innerHTML = working
+      .map((id, i) => {
+        const p = byId(id);
+        if (!p) return "";
+        const up = `<button class="pin-item__btn" type="button" title="Move up" data-move="${id}" data-dir="-1"${i === 0 ? " disabled" : ""}>${icon("chevronup")}</button>`;
+        const down = `<button class="pin-item__btn" type="button" title="Move down" data-move="${id}" data-dir="1"${i === working.length - 1 ? " disabled" : ""}>${icon("chevrondown")}</button>`;
+        const remove = `<button class="pin-item__btn" type="button" title="Remove" data-remove="${id}">${icon("close")}</button>`;
+        return `<li class="pin-item">${icon("sparkles", "pin-item__icon")}<span class="pin-item__label">${p.label}</span>${badge(p.cat)}${up}${down}${remove}</li>`;
+      })
+      .join("");
+  };
+
+  availList.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-add]");
+    if (!btn) return;
+    const id = btn.dataset.add!;
+    if (!working.includes(id) && working.length < MAX) {
+      working.push(id);
+      render();
+    }
+  });
+  pinnedList.addEventListener("click", (e) => {
+    const rm = (e.target as HTMLElement).closest<HTMLElement>("[data-remove]");
+    if (rm) {
+      working = working.filter((x) => x !== rm.dataset.remove);
+      render();
+      return;
+    }
+    const mv = (e.target as HTMLElement).closest<HTMLElement>("[data-move]");
+    if (mv) {
+      const id = mv.dataset.move!;
+      const dir = Number(mv.dataset.dir);
+      const i = working.indexOf(id);
+      const j = i + dir;
+      if (j >= 0 && j < working.length) {
+        [working[i], working[j]] = [working[j], working[i]];
+        render();
+      }
+    }
+  });
+  searchInput?.addEventListener("input", () => {
+    query = searchInput.value;
+    render();
+  });
+
+  const open = (): void => {
+    working = [...committed];
+    query = "";
+    if (searchInput) searchInput.value = "";
+    render();
+    modal.hidden = false;
+  };
+  const close = (): void => {
+    modal.hidden = true;
+  };
+  modal.querySelectorAll<HTMLElement>("[data-pin-close]").forEach((b) => b.addEventListener("click", close));
+  modal.querySelector<HTMLElement>("[data-pin-save]")?.addEventListener("click", () => {
+    committed = [...working];
+    close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) close();
+  });
+
+  // Open from the "Edit pinned prompts" item in the More menu.
+  document.querySelector<HTMLElement>("[data-edit-pinned]")?.addEventListener("click", () => {
+    const menu = document.querySelector<HTMLElement>("[data-more-menu]");
+    if (menu) menu.hidden = true;
+    const moreBtn = document.querySelector<HTMLElement>('[data-prompt="more"]');
+    moreBtn?.classList.remove("is-open");
+    moreBtn?.setAttribute("aria-expanded", "false");
+    open();
+  });
+}
+
+initPinPrompts();

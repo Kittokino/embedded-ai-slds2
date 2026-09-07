@@ -325,7 +325,7 @@ function initAiSummary(): void {
       document.body.appendChild(cont);
     }
     const box = cont;
-    const S = "/assets/icons/utility-sprite/svg/symbols.svg";
+    const S = "assets/icons/utility-sprite/svg/symbols.svg";
     box.innerHTML =
       `<div class="slds-notify slds-notify_toast slds-theme_success" role="status">` +
       `<span class="slds-assistive-text">Success</span>` +
@@ -695,7 +695,7 @@ function initExpand(): void {
   if (!card || !modal || !slot || !toggle) return;
 
   const toggleIcon = toggle.querySelector("use");
-  const S = "/assets/icons/utility-sprite/svg/symbols.svg";
+  const S = "assets/icons/utility-sprite/svg/symbols.svg";
   let placeholder: Comment | null = null;
   const expand = (): void => {
     placeholder = document.createComment("ai-summary-slot");

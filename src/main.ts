@@ -93,6 +93,7 @@ function initAiSummary(): void {
   const generateBtn = card.querySelector<HTMLButtonElement>(".ai-form__generate");
   const oppBox = card.querySelector<HTMLElement>('[data-field="opportunity"]');
   const contactBox = card.querySelector<HTMLElement>('[data-field="contact"]');
+  const purposeBox = card.querySelector<HTMLElement>('[data-field="purpose"]');
   const emailEl = card.querySelector<HTMLElement>("[data-ai-email]");
   const genTime = card.querySelector<HTMLElement>("[data-ai-gentime]");
   const additionalInput = card.querySelector<HTMLTextAreaElement>(".ai-form__textarea");
@@ -101,10 +102,33 @@ function initAiSummary(): void {
 
   const esc = (s: string): string =>
     s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
-  // Keep the prompt label in sync across the form and result states.
+  // Keep the prompt label in sync across the form and result states, and
+  // reshape the form's fields to suit the active prompt.
   const setPrompt = (text: string): void => {
     promptLabels.forEach((el) => (el.textContent = text));
+    applyPromptConfig(text);
   };
+
+  // Relabel a lookup field and toggle its required marker.
+  function relabel(box: HTMLElement | null, text: string, required: boolean): void {
+    const field = box?.closest(".ai-field");
+    const span = field?.querySelector<HTMLElement>("[data-label-text]");
+    const abbr = field?.querySelector<HTMLElement>(".slds-required");
+    if (span) span.textContent = text;
+    if (abbr) abbr.hidden = !required;
+  }
+
+  // Pre-Call Briefing swaps in its own field set (Meeting with, Related
+  // Opportunity, Call purpose, Offer Document) and hides the email-only inputs.
+  function applyPromptConfig(text: string): void {
+    const briefing = text === "Pre-Call Briefing";
+    card!.classList.toggle("is-briefing", briefing);
+    form?.querySelectorAll<HTMLElement>("[data-briefing-only]").forEach((el) => (el.hidden = !briefing));
+    form?.querySelectorAll<HTMLElement>("[data-default-only]").forEach((el) => (el.hidden = briefing));
+    relabel(oppBox, briefing ? "Related Opportunity" : "Opportunity", !briefing);
+    relabel(contactBox, briefing ? "Meeting with" : "Contact", true);
+    updateGenerate();
+  }
 
   const openForm = (promptText: string): void => {
     // Dismiss any lingering tooltip from the clicked prompt button.
@@ -141,7 +165,7 @@ function initAiSummary(): void {
   moreBtn?.addEventListener("click", (e) => {
     e.stopPropagation();
     if (!moreMenu) return;
-    const show = moreMenu.hidden;
+    const show = moreMenu.hidden === true;
     moreMenu.hidden = !show;
     moreBtn.classList.toggle("is-open", show);
     moreBtn.setAttribute("aria-expanded", String(show));
@@ -163,10 +187,14 @@ function initAiSummary(): void {
     card.dataset.state = "empty";
   });
 
-  // Enable Generate only once both Opportunity and Contact are chosen.
-  const bothSelected = (): boolean => Boolean(oppBox?.dataset.value && contactBox?.dataset.value);
+  // Enable Generate once the active prompt's required fields are chosen:
+  // Contact + Call purpose for a briefing, Opportunity + Contact otherwise.
+  const requiredMet = (): boolean =>
+    card.classList.contains("is-briefing")
+      ? Boolean(contactBox?.dataset.value && purposeBox?.dataset.value)
+      : Boolean(oppBox?.dataset.value && contactBox?.dataset.value);
   const updateGenerate = (): void => {
-    if (generateBtn) generateBtn.disabled = !bothSelected();
+    if (generateBtn) generateBtn.disabled = !requiredMet();
   };
   card.addEventListener("combobox:change", updateGenerate);
   updateGenerate();
@@ -212,7 +240,7 @@ function initAiSummary(): void {
   };
 
   generateBtn?.addEventListener("click", () => {
-    if (bothSelected()) showResult();
+    if (requiredMet()) showResult();
   });
 
   // Regenerate: brief spinner, then refresh the email + timestamp in place.

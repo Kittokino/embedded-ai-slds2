@@ -529,6 +529,45 @@ body {
   font-weight: 400;
   margin-bottom: 0.25rem;
 }
+/* Label with an inline info (i) affordance. */
+.ai-field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.ai-field__info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+}
+.ai-field__info-icon {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: var(--slds-g-color-accent-1, #066afe);
+}
+/* File-picker placeholder button (e.g. "Select a File"). */
+.ai-file {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.25rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--slds-g-color-border-2, #747474);
+  border-radius: 999px;
+  background: var(--slds-g-color-surface-1, #fff);
+  color: var(--slds-g-color-accent-1, #066afe);
+  font-weight: 700;
+  cursor: pointer;
+}
+.ai-file:hover {
+  background: var(--slds-g-color-surface-2, #f3f3f3);
+}
 .ai-field .slds-required {
   color: var(--slds-g-color-error-1, #ba0517);
   margin-right: 0.125rem;

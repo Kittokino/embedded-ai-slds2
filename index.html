@@ -348,7 +348,7 @@
 
                 <!-- Opportunity (dropdown) -->
                 <div class="slds-form-element ai-field">
-                  <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr> Opportunity</label>
+                  <label class="slds-form-element__label ai-field__label"><abbr class="slds-required" title="required">*</abbr><span data-label-text>Opportunity</span><button type="button" class="ai-field__info" data-tooltip="The open opportunity to focus this on." aria-label="About this field"><svg class="ai-field__info-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button></label>
                   <div class="ai-combobox" data-combobox data-field="opportunity">
                     <button type="button" class="ai-lookup ai-lookup_trigger" data-combobox-trigger aria-haspopup="listbox" aria-expanded="false">
                       <span class="slds-icon_container slds-icon-standard-opportunity ai-lookup__icon"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use></svg></span>
@@ -370,7 +370,7 @@
 
                 <!-- Contact (searchable dropdown) -->
                 <div class="slds-form-element ai-field">
-                  <label class="slds-form-element__label"><abbr class="slds-required" title="required">*</abbr> Contact</label>
+                  <label class="slds-form-element__label ai-field__label"><abbr class="slds-required" title="required">*</abbr><span data-label-text>Contact</span><button type="button" class="ai-field__info" data-tooltip="The person you'll be speaking with." aria-label="About this field"><svg class="ai-field__info-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button></label>
                   <div class="ai-combobox" data-combobox data-searchable data-field="contact">
                     <button type="button" class="ai-lookup ai-lookup_trigger" data-combobox-trigger aria-haspopup="listbox" aria-expanded="false">
                       <span class="slds-icon_container slds-icon-standard-contact ai-lookup__icon"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#contact"></use></svg></span>
@@ -392,8 +392,35 @@
                   </div>
                 </div>
 
-                <!-- Additional input -->
-                <div class="slds-form-element ai-field">
+                <!-- Call purpose (Pre-Call Briefing only) -->
+                <div class="slds-form-element ai-field" data-briefing-only hidden>
+                  <label class="slds-form-element__label ai-field__label"><abbr class="slds-required" title="required">*</abbr><span data-label-text>Call purpose</span><button type="button" class="ai-field__info" data-tooltip="What this call is about — steers the briefing's focus." aria-label="About this field"><svg class="ai-field__info-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button></label>
+                  <div class="ai-combobox" data-combobox data-field="purpose">
+                    <button type="button" class="ai-lookup ai-lookup_trigger" data-combobox-trigger aria-haspopup="listbox" aria-expanded="false">
+                      <span class="slds-icon_container slds-icon-standard-task ai-lookup__icon"><svg class="slds-icon slds-icon_x-small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#task"></use></svg></span>
+                      <span class="ai-lookup__value is-placeholder" data-combobox-value data-placeholder="Select call purpose">Select call purpose</span>
+                      <svg class="ai-lookup__caret" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg>
+                    </button>
+                    <div class="ai-dropdown" data-combobox-list hidden>
+                      <ul class="ai-dropdown__list" role="listbox" aria-label="Call purpose">
+                        <li class="ai-dropdown__option" role="option" tabindex="-1">Discovery</li>
+                        <li class="ai-dropdown__option" role="option" tabindex="-1">Product Demo</li>
+                        <li class="ai-dropdown__option" role="option" tabindex="-1">Negotiation</li>
+                        <li class="ai-dropdown__option" role="option" tabindex="-1">Renewal</li>
+                        <li class="ai-dropdown__option" role="option" tabindex="-1">Check-in</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Supporting Document (Pre-Call Briefing only) -->
+                <div class="slds-form-element ai-field" data-briefing-only hidden>
+                  <label class="slds-form-element__label ai-field__label"><span data-label-text>Supporting Document</span><button type="button" class="ai-field__info" data-tooltip="Attach any document to reference — a proposal, deck, notes, or transcript (optional)." aria-label="About this field"><svg class="ai-field__info-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#info"></use></svg></button></label>
+                  <button type="button" class="ai-file" data-file-picker><span>Select a File</span></button>
+                </div>
+
+                <!-- Additional input (default prompts only) -->
+                <div class="slds-form-element ai-field" data-default-only>
                   <label class="slds-form-element__label">Additional Input</label>
                   <textarea class="slds-textarea ai-form__textarea" placeholder="Add any extra context for the email&hellip;"></textarea>
                 </div>
@@ -497,7 +524,7 @@
                 <div class="slds-media__figure">
                   <span class="slds-icon_container slds-icon-standard-opportunity"><svg class="slds-icon slds-icon_small"><use href="/assets/icons/standard-sprite/svg/symbols.svg#opportunity"></use></svg></span>
                 </div>
-                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="widget-heading">Opportunities (1)</span></h2></div>
+                <div class="slds-media__body"><h2 class="slds-card__header-title"><span class="widget-heading">Opportunities (6)</span></h2></div>
               </header>
               <div class="slds-no-flex">
                 <button class="slds-button slds-button_icon slds-button_icon-border-filled card-header-action" title="Show more" aria-label="Show more"><svg class="slds-button__icon"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button>

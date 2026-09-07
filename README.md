@@ -3,6 +3,8 @@
 A front-end prototype exploring embedded AI experiences, built on the
 **Salesforce Lightning Design System 2** (global styling hooks, `--slds-g-*`).
 
+**Live demo:** https://kittokino.github.io/embedded-ai-slds2/
+
 > An independent, non-commercial UX concept exploration. See the disclaimer and
 > third-party attribution at the bottom.
 

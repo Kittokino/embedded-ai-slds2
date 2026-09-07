@@ -509,33 +509,37 @@
       </div>
     </div>
 
-    <!-- ==================== EDIT PINNED PROMPTS MODAL ==================== -->
+    <!-- ==================== PROMPT TEMPLATES MODAL ==================== -->
     <div class="pin-modal" data-pin-modal hidden>
-      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="pin-heading" aria-describedby="pin-desc" class="slds-modal slds-fade-in-open">
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="pin-heading" aria-describedby="pin-desc" class="slds-modal slds-fade-in-open slds-modal_medium">
         <div class="slds-modal__container">
           <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" data-pin-close title="Close">
             <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg>
             <span class="slds-assistive-text">Close</span>
           </button>
-          <div class="slds-modal__header">
-            <h1 id="pin-heading" class="slds-modal__title slds-hyphenate">Edit Pinned Prompts</h1>
+          <div class="slds-modal__header slds-text-align_center">
+            <h1 id="pin-heading" class="slds-modal__title slds-hyphenate">Prompt Templates</h1>
+            <p id="pin-desc" class="pin-modal__desc">Select the prompt templates to be displayed in AI Summary. The templates will appear in AI Summary in the order selected here.</p>
           </div>
           <div class="slds-modal__content slds-p-around_medium">
-            <p id="pin-desc" class="slds-m-bottom_medium slds-text-color_weak">Pick the prompts to show under &ldquo;More&rdquo;, and set their order. You can pin up to 10.</p>
+            <h2 class="pin-subhead">Select prompt templates</h2>
             <div class="pin-dueling">
-              <section class="pin-panel">
-                <header class="pin-panel__head"><span class="pin-panel__title">Available prompts</span><span class="pin-panel__count" data-avail-count></span></header>
-                <div class="pin-panel__search">
-                  <svg class="pin-panel__search-icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use></svg>
-                  <input type="text" class="pin-panel__search-input" placeholder="Search prompts&hellip;" data-pin-search aria-label="Search prompts" />
-                </div>
-                <ul class="pin-list" data-avail-list></ul>
-              </section>
-              <section class="pin-panel">
-                <header class="pin-panel__head"><span class="pin-panel__title">Pinned prompts</span><span class="pin-panel__count" data-pinned-count></span></header>
-                <ul class="pin-list" data-pinned-list></ul>
-              </section>
+              <span class="pin-col__label pin-area-availlabel">Available</span>
+              <span class="pin-col__label pin-area-sellabel">Selected</span>
+              <ul class="pin-listbox pin-area-avail" data-avail-list role="listbox" aria-label="Available templates"></ul>
+              <div class="pin-moves pin-area-moves">
+                <button class="pin-move" type="button" data-move-right title="Move to Selected" aria-label="Move to Selected"><svg aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use></svg></button>
+                <button class="pin-move" type="button" data-move-left title="Move to Available" aria-label="Move to Available"><svg aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevronleft"></use></svg></button>
+              </div>
+              <ul class="pin-listbox pin-area-sel" data-selected-list role="listbox" aria-label="Selected templates"></ul>
+              <div class="pin-reorder pin-area-reorder">
+                <button class="pin-move" type="button" data-reorder-up title="Move up" aria-label="Move up"><svg aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevronup"></use></svg></button>
+                <button class="pin-move" type="button" data-reorder-down title="Move down" aria-label="Move down"><svg aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button>
+              </div>
+              <button class="pin-add-custom pin-area-addcustom" type="button" data-add-custom><svg class="pin-add-custom__icon" aria-hidden="true"><use href="/assets/icons/utility-sprite/svg/symbols.svg#add"></use></svg>Add a Custom Prompt</button>
             </div>
+            <h2 class="pin-subhead pin-subhead_details">Prompt Template Details</h2>
+            <div class="pin-details" data-pin-details></div>
           </div>
           <div class="slds-modal__footer">
             <button class="slds-button slds-button_neutral" type="button" data-pin-close>Cancel</button>

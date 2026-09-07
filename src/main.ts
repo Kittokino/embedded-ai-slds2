@@ -434,108 +434,128 @@ function initCollapsibleCards(): void {
 initCollapsibleCards();
 
 /**
- * "Edit Pinned Prompts" modal — a dueling picklist. Left panel lists all
- * available prompts (with a pin button); right panel shows the pinned set with
- * reorder/remove. Cancel discards; Save commits the working order.
+ * "Prompt Templates" modal — an SLDS dueling list. The Available panel groups
+ * templates by category (bold headers); the move buttons transfer the
+ * highlighted template between Available and Selected; the reorder buttons
+ * order the Selected list; selecting a template shows its details. Save commits
+ * the Selected order.
  */
 function initPinPrompts(): void {
   const modal = document.querySelector<HTMLElement>("[data-pin-modal]");
   if (!modal) return;
 
   const availList = modal.querySelector<HTMLElement>("[data-avail-list]")!;
-  const pinnedList = modal.querySelector<HTMLElement>("[data-pinned-list]")!;
-  const availCount = modal.querySelector<HTMLElement>("[data-avail-count]")!;
-  const pinnedCount = modal.querySelector<HTMLElement>("[data-pinned-count]")!;
-  const searchInput = modal.querySelector<HTMLInputElement>("[data-pin-search]");
+  const selList = modal.querySelector<HTMLElement>("[data-selected-list]")!;
+  const details = modal.querySelector<HTMLElement>("[data-pin-details]")!;
+  const moveRight = modal.querySelector<HTMLButtonElement>("[data-move-right]")!;
+  const moveLeft = modal.querySelector<HTMLButtonElement>("[data-move-left]")!;
+  const reorderUp = modal.querySelector<HTMLButtonElement>("[data-reorder-up]")!;
+  const reorderDown = modal.querySelector<HTMLButtonElement>("[data-reorder-down]")!;
 
-  interface Prompt { id: string; label: string; cat: string; }
-  const PROMPTS: Prompt[] = [
-    { id: "upsell", label: "Personalized Upsell Email", cat: "EMAIL" },
-    { id: "briefing", label: "Pre-Call Briefing", cat: "PREP" },
-    { id: "account-summary", label: "Account Summary", cat: "INSIGHT" },
-    { id: "next-steps", label: "Recommended Next Steps", cat: "ACTION" },
-    { id: "renewal-risk", label: "Renewal Risk Assessment", cat: "RISK" },
-    { id: "battlecard", label: "Competitive Battlecard", cat: "INSIGHT" },
-    { id: "followup", label: "Meeting Follow-up Email", cat: "EMAIL" },
-    { id: "stakeholder", label: "Stakeholder Map", cat: "INSIGHT" },
-    { id: "deal-risk", label: "Deal Risk Analysis", cat: "RISK" },
-    { id: "objection", label: "Objection Handling", cat: "PREP" },
+  interface Tpl { id: string; label: string; desc: string; body?: string; }
+  interface Group { cat: string; items: Tpl[]; }
+  const CATALOG: Group[] = [
+    { cat: "Email", items: [
+      { id: "upsell", label: "Personalized Upsell Email", desc: "Draft a personalized email suggesting relevant add-ons and upgrades for this account." },
+      { id: "followup", label: "Meeting Follow-up Email", desc: "Recap the meeting with clear action items and the agreed next steps.", body: `<p class="pin-details__desc">Drafts a concise, professional recap email after a customer meeting. It pulls the meeting notes, the attendees, and any commitments made, then produces an email that thanks the attendees, summarizes what was discussed, restates decisions, and lists action items with owners and due dates.</p><h4 class="pin-details__subhead">Prompt instructions</h4><p class="pin-details__quote">You are a helpful sales assistant. Using the meeting notes for {Account}, write a follow-up email to {Contact}. Open with a brief thank-you, summarize the key discussion points in two to three sentences, restate any decisions that were made, then list the agreed action items as bullets with an owner and a target date for each. Keep the tone warm and professional and under 200 words, and close with a clear next step and a sign-off.</p><h4 class="pin-details__subhead">Grounding data</h4><ul class="pin-details__list"><li>Account and contact details</li><li>Meeting notes and call transcript</li><li>Open action items and tasks</li><li>Recent activity on the account</li></ul><h4 class="pin-details__subhead">Output</h4><p class="pin-details__desc">A plain-text email with a subject line, greeting, a short recap, an action-item list, and a sign-off. Review before sending.</p>` },
+      { id: "renewal-email", label: "Renewal Reminder Email", desc: "Remind the customer of an upcoming renewal with the key terms and the value delivered so far." },
+    ]},
+    { cat: "Prep", items: [
+      { id: "briefing", label: "Pre-Call Briefing", desc: "Summarize the account's status, key contacts, and recent activity ahead of a call." },
+      { id: "objection", label: "Objection Handling", desc: "Anticipate likely objections and suggest responses tailored to this account." },
+      { id: "discovery", label: "Discovery Questions", desc: "Generate discovery questions to uncover needs and qualify the opportunity." },
+    ]},
+    { cat: "Insight", items: [
+      { id: "account-summary", label: "Account Summary", desc: "Summarize this account — key details, recent activity, and relationships at a glance." },
+      { id: "opp-summary", label: "Opportunity Summary", desc: "Summarize the open opportunity — stage, amount, close date, and momentum." },
+      { id: "stakeholder", label: "Stakeholder Map", desc: "Map the key contacts, their roles, and their influence across the account." },
+      { id: "battlecard", label: "Competitive Battlecard", desc: "Position against a competitor mentioned in this account." },
+    ]},
+    { cat: "Action", items: [
+      { id: "next-steps", label: "Recommended Next Steps", desc: "Suggest the best next actions based on the account's stage and recent activity." },
+    ]},
+    { cat: "Risk", items: [
+      { id: "renewal-risk", label: "Renewal Risk Assessment", desc: "Assess renewal and churn risk from activity gaps, sentiment, and competitive signals." },
+      { id: "deal-risk", label: "Deal Risk Analysis", desc: "Analyze what could stall the open opportunity and how to de-risk it." },
+    ]},
   ];
-  const MAX = 10;
-  const S = "/assets/icons/utility-sprite/svg/symbols.svg";
-  let committed: string[] = ["upsell", "briefing", "account-summary", "next-steps", "renewal-risk"];
-  let working: string[] = [...committed];
-  let query = "";
+  const byId = (id: string): Tpl | undefined =>
+    CATALOG.flatMap((g) => g.items).find((t) => t.id === id);
 
-  const byId = (id: string): Prompt | undefined => PROMPTS.find((p) => p.id === id);
-  const icon = (name: string, cls = ""): string =>
-    `<svg${cls ? ` class="${cls}"` : ""} aria-hidden="true"><use href="${S}#${name}"></use></svg>`;
-  const badge = (cat: string): string =>
-    `<span class="pin-badge pin-badge_${cat.toLowerCase()}">${cat}</span>`;
+  let committed = ["upsell", "briefing", "account-summary", "next-steps", "renewal-risk"];
+  let selected: string[] = [...committed];
+  let highlighted: string | null = null;
+
+  const SPROUT = `<svg class="pin-details__art" viewBox="0 0 160 100" width="150" height="94" aria-hidden="true"><circle cx="96" cy="36" r="22" fill="#dce8ff"/><path d="M70 16l2.5 6 6 2.5-6 2.5-2.5 6-2.5-6-6-2.5 6-2.5z" fill="#0b5cab"/><path d="M118 26l1.8 4.5 4.5 1.8-4.5 1.8-1.8 4.5-1.8-4.5-4.5-1.8 4.5-1.8z" fill="#7cb1fe"/><g stroke="#7fa8f0" stroke-width="2.5" fill="none" stroke-linecap="round"><path d="M60 90V70"/><path d="M80 90V62"/><path d="M100 90V72"/></g><g fill="#a9c7fb"><ellipse cx="53" cy="70" rx="7" ry="4" transform="rotate(-28 53 70)"/><ellipse cx="67" cy="70" rx="7" ry="4" transform="rotate(28 67 70)"/><ellipse cx="72" cy="62" rx="8" ry="4.5" transform="rotate(-28 72 62)"/><ellipse cx="88" cy="62" rx="8" ry="4.5" transform="rotate(28 88 62)"/><ellipse cx="93" cy="72" rx="7" ry="4" transform="rotate(-28 93 72)"/><ellipse cx="107" cy="72" rx="7" ry="4" transform="rotate(28 107 72)"/></g></svg>`;
 
   const render = (): void => {
-    const q = query.trim().toLowerCase();
-    const avail = PROMPTS.filter((p) => p.label.toLowerCase().includes(q) || p.cat.toLowerCase().includes(q));
-    availCount.textContent = `${PROMPTS.length} available`;
-    availList.innerHTML = avail
-      .map((p) => {
-        const isPinned = working.includes(p.id);
-        const disabled = isPinned || working.length >= MAX;
-        const btnIcon = isPinned ? icon("check") : icon("add");
-        return `<li class="pin-item">${icon("sparkles", "pin-item__icon")}<span class="pin-item__label">${p.label}</span>${badge(p.cat)}<button class="pin-item__btn pin-item__btn_add" type="button" title="Pin" data-add="${p.id}"${disabled ? " disabled" : ""}>${btnIcon}</button></li>`;
+    availList.innerHTML = CATALOG.map((g) => {
+      const items = g.items.filter((t) => !selected.includes(t.id));
+      if (!items.length) return "";
+      return (
+        `<li class="pin-group" role="presentation">${g.cat}</li>` +
+        items
+          .map((t) => `<li class="pin-opt${highlighted === t.id ? " is-highlighted" : ""}" role="option" aria-selected="${highlighted === t.id}" data-id="${t.id}">${t.label}</li>`)
+          .join("")
+      );
+    }).join("");
+
+    selList.innerHTML = selected
+      .map((id) => {
+        const t = byId(id);
+        if (!t) return "";
+        return `<li class="pin-opt${highlighted === id ? " is-highlighted" : ""}" role="option" aria-selected="${highlighted === id}" data-id="${id}">${t.label}</li>`;
       })
       .join("");
 
-    pinnedCount.textContent = `${working.length} of ${MAX}`;
-    pinnedList.innerHTML = working
-      .map((id, i) => {
-        const p = byId(id);
-        if (!p) return "";
-        const up = `<button class="pin-item__btn" type="button" title="Move up" data-move="${id}" data-dir="-1"${i === 0 ? " disabled" : ""}>${icon("chevronup")}</button>`;
-        const down = `<button class="pin-item__btn" type="button" title="Move down" data-move="${id}" data-dir="1"${i === working.length - 1 ? " disabled" : ""}>${icon("chevrondown")}</button>`;
-        const remove = `<button class="pin-item__btn" type="button" title="Remove" data-remove="${id}">${icon("close")}</button>`;
-        return `<li class="pin-item">${icon("sparkles", "pin-item__icon")}<span class="pin-item__label">${p.label}</span>${badge(p.cat)}${up}${down}${remove}</li>`;
-      })
-      .join("");
+    const inSel = highlighted !== null && selected.includes(highlighted);
+    const inAvail = highlighted !== null && !inSel;
+    const idx = highlighted !== null ? selected.indexOf(highlighted) : -1;
+    moveRight.disabled = !inAvail;
+    moveLeft.disabled = !inSel;
+    reorderUp.disabled = !inSel || idx <= 0;
+    reorderDown.disabled = !inSel || idx >= selected.length - 1;
+
+    const t = highlighted ? byId(highlighted) : undefined;
+    details.innerHTML = t
+      ? `<div class="pin-details__name">${t.label}</div>${t.body ?? `<div class="pin-details__desc">${t.desc}</div>`}`
+      : `<div class="pin-details__empty">${SPROUT}<span>No Prompt Template Selected</span></div>`;
   };
 
-  availList.addEventListener("click", (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLElement>("[data-add]");
-    if (!btn) return;
-    const id = btn.dataset.add!;
-    if (!working.includes(id) && working.length < MAX) {
-      working.push(id);
+  [availList, selList].forEach((list) =>
+    list.addEventListener("click", (e) => {
+      const opt = (e.target as HTMLElement).closest<HTMLElement>(".pin-opt");
+      if (!opt) return;
+      highlighted = opt.dataset.id ?? null;
+      render();
+    })
+  );
+  moveRight.addEventListener("click", () => {
+    if (highlighted && !selected.includes(highlighted)) {
+      selected.push(highlighted);
       render();
     }
   });
-  pinnedList.addEventListener("click", (e) => {
-    const rm = (e.target as HTMLElement).closest<HTMLElement>("[data-remove]");
-    if (rm) {
-      working = working.filter((x) => x !== rm.dataset.remove);
+  moveLeft.addEventListener("click", () => {
+    if (highlighted && selected.includes(highlighted)) {
+      selected = selected.filter((x) => x !== highlighted);
       render();
-      return;
-    }
-    const mv = (e.target as HTMLElement).closest<HTMLElement>("[data-move]");
-    if (mv) {
-      const id = mv.dataset.move!;
-      const dir = Number(mv.dataset.dir);
-      const i = working.indexOf(id);
-      const j = i + dir;
-      if (j >= 0 && j < working.length) {
-        [working[i], working[j]] = [working[j], working[i]];
-        render();
-      }
     }
   });
-  searchInput?.addEventListener("input", () => {
-    query = searchInput.value;
+  const reorder = (dir: number): void => {
+    if (highlighted === null) return;
+    const i = selected.indexOf(highlighted);
+    const j = i + dir;
+    if (i < 0 || j < 0 || j >= selected.length) return;
+    [selected[i], selected[j]] = [selected[j], selected[i]];
     render();
-  });
+  };
+  reorderUp.addEventListener("click", () => reorder(-1));
+  reorderDown.addEventListener("click", () => reorder(1));
 
   const open = (): void => {
-    working = [...committed];
-    query = "";
-    if (searchInput) searchInput.value = "";
+    selected = [...committed];
+    highlighted = null;
     render();
     modal.hidden = false;
   };
@@ -544,9 +564,11 @@ function initPinPrompts(): void {
   };
   modal.querySelectorAll<HTMLElement>("[data-pin-close]").forEach((b) => b.addEventListener("click", close));
   modal.querySelector<HTMLElement>("[data-pin-save]")?.addEventListener("click", () => {
-    committed = [...working];
+    committed = [...selected];
     close();
   });
+  // "Add a Custom Prompt" — placeholder for a future workflow (not built here).
+  modal.querySelector<HTMLElement>("[data-add-custom]")?.addEventListener("click", () => {});
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !modal.hidden) close();
   });

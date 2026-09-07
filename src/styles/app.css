@@ -451,7 +451,8 @@ body {
 }
 .ai-lookup.is-disabled {
   border-color: var(--slds-g-color-border-1, #d0d0d0);
-  background: var(--slds-g-color-surface-container-1, #fbfbfb);
+  /* Light grey fill signals a read-only field (SLDS 2 disabled-container hook). */
+  background: var(--slds-g-color-disabled-container-1, #e5e5e5);
 }
 .ai-lookup.is-focused {
   border-color: var(--slds-g-color-accent-3, #032d60);

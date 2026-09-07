@@ -923,6 +923,37 @@ body {
 .ai-result__body p {
   margin: 0 0 1rem;
 }
+/* ---- Pre-Call Briefing output ---- */
+.ai-brief__lead {
+  margin: 0 0 1rem;
+}
+.ai-brief__head {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--slds-g-color-on-surface-3, #03234d);
+}
+.ai-brief__head:first-child {
+  margin-top: 0;
+}
+.ai-brief__list {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+.ai-brief__list li {
+  margin: 0 0 0.4rem;
+  padding-left: 0.15rem;
+}
+.ai-cite {
+  color: var(--slds-g-color-accent-1, #066afe);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ai-cite:hover {
+  text-decoration: underline;
+}
 .ai-result__footer {
   display: flex;
   align-items: center;

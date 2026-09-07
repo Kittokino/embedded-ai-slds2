@@ -226,8 +226,63 @@ function initAiSummary(): void {
     emailEl.innerHTML = paras.map((p) => `<p>${p}</p>`).join("");
   };
 
+  // Build the mock Pre-Call Briefing: bold section headers with bulleted
+  // points and numbered citations back to the Sources list, woven together
+  // from the form inputs (contact, opportunity, call purpose).
+  const buildBriefing = (): void => {
+    if (!emailEl) return;
+    const contact = esc(contactBox?.dataset.value ?? "your contact");
+    const first = contact.split(" ")[0];
+    const purpose = esc(purposeBox?.dataset.value ?? "upcoming");
+    const account = "Acme, Inc.";
+    const opp = oppBox?.dataset.value ? esc(oppBox.dataset.value) : null;
+    const oppText = opp ?? "the open opportunity";
+    // Citations link back to the numbered Sources below the briefing.
+    const cite = (n: number): string => `<a href="#" class="ai-cite" data-cite="${n}">[${n}]</a>`;
+
+    emailEl.innerHTML = `
+      <p class="ai-brief__lead">Briefing for your <strong>${purpose}</strong> call with <strong>${contact}</strong> at <strong>${account}</strong>${opp ? `, focused on <strong>${opp}</strong>` : ""}.</p>
+
+      <h4 class="ai-brief__head">Key Points from Recent Call Log:</h4>
+      <ul class="ai-brief__list">
+        <li>Discussed progress on the rollout of the “SynergyConnect” platform and the next integration milestones. ${cite(1)}</li>
+        <li>${first} asked about advanced reporting features and how they tie into their existing “DataView” system.</li>
+        <li>Noted a minor delay in receiving the final documentation for API access. ${cite(2)}</li>
+      </ul>
+
+      <h4 class="ai-brief__head">${oppText} — Current Status:</h4>
+      <ul class="ai-brief__list">
+        <li>Stage is <strong>Negotiation</strong>; ${account} is evaluating the proposed expansion terms.</li>
+        <li>Primary interest is scaling licenses and the add-on modules discussed last quarter. ${cite(3)}</li>
+      </ul>
+
+      <h4 class="ai-brief__head">Resolution Status of Last Support Ticket (TS005):</h4>
+      <ul class="ai-brief__list">
+        <li>The intermittent connectivity issue on the legacy system was marked <strong>Resolved</strong>.</li>
+        <li>The fix involved a software patch and a configuration update to the integration layer.</li>
+      </ul>
+
+      <h4 class="ai-brief__head">Recommended Talking Points for this ${purpose} Call:</h4>
+      <ul class="ai-brief__list">
+        <li>Confirm the API documentation has landed and unblock the integration timeline.</li>
+        <li>Reaffirm the value of the reporting add-ons ahead of ${oppText}.</li>
+        <li>Align with ${first} on next steps and a target close date.</li>
+      </ul>`;
+  };
+
+  // Pick the right generator for the active prompt.
+  const buildResult = (): void => {
+    if (card.classList.contains("is-briefing")) buildBriefing();
+    else buildEmail();
+  };
+  // Citations are illustrative in the prototype — don't jump the page.
+  emailEl?.addEventListener("click", (e) => {
+    const cite = (e.target as HTMLElement)?.closest(".ai-cite");
+    if (cite) e.preventDefault();
+  });
+
   const showResult = (): void => {
-    buildEmail();
+    buildResult();
     if (genTime) genTime.textContent = nowTime();
     if (loader) loader.hidden = false;
     window.setTimeout(() => {
@@ -248,7 +303,7 @@ function initAiSummary(): void {
     if (loader) loader.hidden = false;
     window.setTimeout(() => {
       if (loader) loader.hidden = true;
-      buildEmail();
+      buildResult();
       if (genTime) genTime.textContent = nowTime();
     }, LOADER_MS);
   });
@@ -319,8 +374,12 @@ function initAiSummary(): void {
     sw.querySelectorAll<HTMLElement>("[data-prompt-option]").forEach((opt) => {
       opt.addEventListener("click", (e) => {
         e.stopPropagation();
-        setPrompt(opt.textContent!.trim());
+        const text = opt.textContent!.trim();
         closePromptMenus();
+        // From a generated result, switching prompt loads that prompt's form;
+        // while already in the form, just reshape it to the chosen prompt.
+        if (card.dataset.state === "result") openForm(text);
+        else setPrompt(text);
       });
     });
   });

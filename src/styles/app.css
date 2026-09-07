@@ -20,7 +20,13 @@ body {
 }
 
 /* ---- Global header ---- */
+/* SLDS sets this container to position:fixed, which lifts it out of flow so the
+   context bar and page render underneath it. Use sticky instead: it keeps its
+   space in normal flow (content stacks below) while still pinning on scroll. */
 .slds-global-header_container {
+  position: sticky;
+  top: 0;
+  z-index: 5;
   border-bottom: 1px solid var(--slds-g-color-border-1, #e5e5e5);
 }
 /* Let the console chrome shrink / scroll internally instead of forcing the

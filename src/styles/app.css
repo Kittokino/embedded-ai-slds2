@@ -271,7 +271,7 @@ body {
   z-index: 1;
   width: 40rem;
   max-width: 94vw;
-  height: 35rem; /* trimmed ~145px so the content fills the modal */
+  height: calc(35rem + 15px); /* 575px — a touch taller so the Generate button clears */
   max-height: 92vh;
   display: flex;
   border-radius: 0.5rem;

@@ -751,9 +751,10 @@ function initAgentforce(): void {
   const thread = panel?.querySelector<HTMLElement>("[data-af-thread]");
   const suggestions = panel?.querySelector<HTMLElement>("[data-af-suggestions]");
   const composer = panel?.querySelector<HTMLFormElement>("[data-af-composer]");
-  const input = panel?.querySelector<HTMLInputElement>("[data-af-input]");
+  const input = panel?.querySelector<HTMLTextAreaElement>("[data-af-input]");
   const mask = document.querySelector<HTMLElement>("[data-ai-mask]");
   const promptLabel = document.querySelector<HTMLElement>("#ai-summary [data-prompt-label]");
+  const emailEl = document.querySelector<HTMLElement>("#ai-summary [data-ai-email]");
   if (!panel || !thread || !suggestions || !composer || !input) return;
 
   const scrollDown = (): void => {
@@ -816,7 +817,15 @@ function initAgentforce(): void {
     thread.innerHTML = "";
     if (mode === "seeded") {
       const prompt = promptLabel?.textContent?.trim() || "AI Summary";
-      addMessage("agent", `Here's the draft I put together for the ${prompt}. Want me to refine it?`);
+      const draft = emailEl?.innerText.trim();
+      // Carry the generated draft into the conversation so it continues here.
+      if (draft) {
+        addMessage("agent", `Here's the draft I put together for the ${prompt}:`);
+        addMessage("agent", draft);
+        addMessage("agent", "Want me to refine it?");
+      } else {
+        addMessage("agent", `Here's the draft I put together for the ${prompt}. Want me to refine it?`);
+      }
       renderChips(["Make the tone formal", contextChip(prompt)]);
       if (mask) mask.hidden = false; // hand the conversation off from the widget
     } else {
@@ -841,10 +850,20 @@ function initAgentforce(): void {
   panel.querySelectorAll<HTMLElement>("[data-af-close]").forEach((btn) => {
     btn.addEventListener("click", close);
   });
-  composer.addEventListener("submit", (e) => {
-    e.preventDefault();
+  const submit = (): void => {
     send(input.value);
     input.value = "";
+  };
+  composer.addEventListener("submit", (e) => {
+    e.preventDefault();
+    submit();
+  });
+  // Enter sends; Shift+Enter inserts a newline (standard chat behavior).
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      submit();
+    }
   });
 }
 

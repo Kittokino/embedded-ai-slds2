@@ -317,6 +317,17 @@ body {
   max-height: none;
   overflow: visible;
 }
+/* Let the placeholder fill the available space (centered) rather than forcing
+   a fixed height that overflows and spawns a scrollbar. */
+.expand-modal .ai-placeholder {
+  flex: 1;
+  min-height: 0;
+}
+/* Placeholder content is short and flexes to fit — no scroll needed, so
+   suppress the scrollbar (avoids a sub-pixel overflow spawning one). */
+.expand-modal .ai-summary.is-placeholder .ai-summary__form {
+  overflow: hidden;
+}
 .expand-modal .ai-summary__form-footer,
 .expand-modal .ai-result__footer {
   position: sticky;
@@ -1087,6 +1098,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* Reserve the button's height so the footer doesn't collapse (and let the
+     absolutely-positioned Back button overflow) when Generate is hidden. */
+  min-height: 2.25rem;
   margin-top: 1.25rem;
   padding-top: 1rem;
   border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);

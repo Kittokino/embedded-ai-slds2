@@ -271,7 +271,7 @@ body {
   z-index: 1;
   width: 40rem;
   max-width: 94vw;
-  height: 44rem; /* slightly taller than wide */
+  height: 35rem; /* trimmed ~145px so the content fills the modal */
   max-height: 92vh;
   display: flex;
   border-radius: 0.5rem;
@@ -663,21 +663,22 @@ body {
   padding: 1.5rem;
   text-align: center;
   border-radius: 0.5rem;
-  /* A darker veil so the widget's boundary reads clearly against the page. */
-  background: color-mix(in srgb, var(--slds-g-color-on-surface-2, #2e2e2e) 70%, transparent);
-  backdrop-filter: blur(1px);
+  /* A light veil (no blur); a defined border marks the widget boundary so it
+     stays distinct from the page without needing a dark fill. */
+  background: color-mix(in srgb, var(--slds-g-color-surface-3, #e5e5e5) 85%, transparent);
+  border: 1.5px solid var(--slds-g-color-border-2, #747474);
 }
 .ai-summary__mask-icon {
   width: 1.75rem;
   height: 1.75rem;
-  fill: #fff;
+  fill: var(--slds-g-color-on-surface-1, #5c5c5c);
 }
 .ai-summary__mask p {
   margin: 0;
   max-width: 16rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--slds-g-color-on-surface-2, #2e2e2e);
 }
 
 .af-panel {

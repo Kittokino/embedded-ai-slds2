@@ -290,9 +290,41 @@ body {
   display: flex;
   flex-direction: column;
 }
+/* Expanded modal: the active state scrolls internally while its footer
+   (Back / Generate / result actions) stays pinned to the modal's bottom —
+   margin-top:auto holds it down when content is short, sticky pins it when
+   content scrolls. */
 .expand-modal .ai-summary__body {
   flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.expand-modal .ai-summary__empty,
+.expand-modal .ai-summary__form,
+.expand-modal .ai-summary__result {
+  flex: 1;
+  min-height: 0;
+}
+.expand-modal .ai-summary__form,
+.expand-modal .ai-summary__result {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+}
+.expand-modal .ai-result__scroll {
+  max-height: none;
+  overflow: visible;
+}
+.expand-modal .ai-summary__form-footer,
+.expand-modal .ai-result__footer {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  background: var(--slds-g-color-surface-1, #fff);
+  border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
 }
 /* Expanded: surface the extra prompts as buttons and drop them from "More". */
 .ai-prompt-extra {

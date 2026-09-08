@@ -752,7 +752,7 @@ function initAgentforce(): void {
   const suggestions = panel?.querySelector<HTMLElement>("[data-af-suggestions]");
   const composer = panel?.querySelector<HTMLFormElement>("[data-af-composer]");
   const input = panel?.querySelector<HTMLTextAreaElement>("[data-af-input]");
-  const mask = document.querySelector<HTMLElement>("[data-ai-mask]");
+  const card = document.querySelector<HTMLElement>("#ai-summary");
   const promptLabel = document.querySelector<HTMLElement>("#ai-summary [data-prompt-label]");
   const emailEl = document.querySelector<HTMLElement>("#ai-summary [data-ai-email]");
   if (!panel || !thread || !suggestions || !composer || !input) return;
@@ -840,11 +840,11 @@ function initAgentforce(): void {
         addMessage("agent", `Here's the draft I put together for the ${prompt}. Want me to refine it?`);
       }
       renderChips(["Make the tone formal", contextChip(prompt)]);
-      if (mask) mask.hidden = false; // hand the conversation off from the widget
+      card?.classList.add("is-agentforce"); // hand the conversation off from the widget
     } else {
       addMessage("agent", "Hi, I'm Agentforce. How can I help you with this account?");
       renderChips([]);
-      if (mask) mask.hidden = true; // a blank session is unrelated to the widget
+      card?.classList.remove("is-agentforce"); // a blank session is unrelated to the widget
     }
     panel.classList.add("is-open");
     panel.setAttribute("aria-hidden", "false");
@@ -854,7 +854,7 @@ function initAgentforce(): void {
   const close = (): void => {
     panel.classList.remove("is-open");
     panel.setAttribute("aria-hidden", "true");
-    if (mask) mask.hidden = true;
+    card?.classList.remove("is-agentforce");
   };
 
   document.querySelectorAll<HTMLElement>("[data-af-open]").forEach((btn) => {

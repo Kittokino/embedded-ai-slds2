@@ -243,11 +243,6 @@
         <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
           <!-- ==================== AI SUMMARY WIDGET ==================== -->
           <article id="ai-summary" class="slds-card ai-summary slds-m-bottom_small" data-state="empty">
-            <!-- Overlay shown while the conversation is handed to the Agentforce panel -->
-            <div class="ai-summary__mask" data-ai-mask hidden>
-              <svg class="ai-summary__mask-icon" aria-hidden="true"><use href="assets/icons/utility-sprite/svg/symbols.svg#einstein"></use></svg>
-              <p>Conversation is now in the Agentforce panel</p>
-            </div>
             <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
               <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
@@ -464,6 +459,11 @@
                   <button class="ai-result__regen" type="button" data-ai-regen title="Regenerate"><svg><use href="assets/icons/utility-sprite/svg/symbols.svg#regenerate"></use></svg></button>
                 </p>
                 <div class="ai-result__scroll">
+                  <!-- Shown in place of the generated text while the conversation is in the Agentforce panel -->
+                  <div class="af-handoff" data-af-handoff>
+                    <svg class="af-handoff__icon" aria-hidden="true"><use href="assets/icons/utility-sprite/svg/symbols.svg#einstein"></use></svg>
+                    <p>Conversation is now in the Agentforce panel</p>
+                  </div>
                   <div class="ai-result__body" data-ai-email></div>
 
                   <!-- Sources the generation drew from -->

@@ -646,34 +646,40 @@ body {
   display: none;
 }
 
-/* ---- Agentforce panel ---- */
-.ai-summary {
-  position: relative;
+/* ---- Agentforce hand-off (no mask) ---- */
+/* While the conversation is in the panel, the widget's controls are disabled
+   and the generated-text area is replaced by a centered hand-off message. */
+.ai-summary.is-agentforce button,
+.ai-summary.is-agentforce a[href],
+.ai-summary.is-agentforce input,
+.ai-summary.is-agentforce textarea,
+.ai-summary.is-agentforce .ai-lookup_trigger {
+  pointer-events: none;
+  opacity: 0.5;
 }
-/* Grey mask over the widget while the conversation is handed to the panel. */
-.ai-summary__mask {
-  position: absolute;
-  inset: 0;
-  z-index: 20;
-  display: flex;
+.af-handoff {
+  display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 1.5rem;
+  min-height: 14rem;
+  padding: 1rem;
   text-align: center;
-  border-radius: 0.5rem;
-  /* A light veil (no blur); a defined border marks the widget boundary so it
-     stays distinct from the page without needing a dark fill. */
-  background: color-mix(in srgb, var(--slds-g-color-surface-3, #e5e5e5) 85%, transparent);
-  border: 1.5px solid var(--slds-g-color-border-2, #747474);
 }
-.ai-summary__mask-icon {
+.ai-summary.is-agentforce .af-handoff {
+  display: flex;
+}
+.ai-summary.is-agentforce [data-ai-email],
+.ai-summary.is-agentforce .ai-result__sources {
+  display: none;
+}
+.af-handoff__icon {
   width: 1.75rem;
   height: 1.75rem;
   fill: var(--slds-g-color-on-surface-1, #5c5c5c);
 }
-.ai-summary__mask p {
+.af-handoff p {
   margin: 0;
   max-width: 16rem;
   font-size: 0.9rem;

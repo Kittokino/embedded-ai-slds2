@@ -689,7 +689,7 @@ body {
 
 .af-panel {
   position: fixed;
-  top: 0;
+  top: 3.2rem; /* start just below the ~51px global header */
   right: 0;
   bottom: 0;
   z-index: 9200;

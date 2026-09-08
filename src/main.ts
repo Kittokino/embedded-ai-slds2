@@ -739,3 +739,113 @@ function initExpand(): void {
 }
 
 initExpand();
+
+/**
+ * Agentforce side panel. "Ask Agentforce" (in a generated result) opens it
+ * seeded with a context message about the active prompt and masks the AI
+ * Summary widget; the header Agentforce icon opens a blank, unrelated chat.
+ * Canned replies stand in for a real model. Closes only via the X button.
+ */
+function initAgentforce(): void {
+  const panel = document.querySelector<HTMLElement>("[data-af-panel]");
+  const thread = panel?.querySelector<HTMLElement>("[data-af-thread]");
+  const suggestions = panel?.querySelector<HTMLElement>("[data-af-suggestions]");
+  const composer = panel?.querySelector<HTMLFormElement>("[data-af-composer]");
+  const input = panel?.querySelector<HTMLInputElement>("[data-af-input]");
+  const mask = document.querySelector<HTMLElement>("[data-ai-mask]");
+  const promptLabel = document.querySelector<HTMLElement>("#ai-summary [data-prompt-label]");
+  if (!panel || !thread || !suggestions || !composer || !input) return;
+
+  const scrollDown = (): void => {
+    thread.scrollTop = thread.scrollHeight;
+  };
+
+  const addMessage = (role: "agent" | "user", text: string): HTMLElement => {
+    const el = document.createElement("div");
+    el.className = `af-msg af-msg_${role}`;
+    el.textContent = text;
+    thread.appendChild(el);
+    scrollDown();
+    return el;
+  };
+
+  // Show a typing indicator, then replace it with the agent's reply.
+  const agentReply = (text: string): void => {
+    const bubble = document.createElement("div");
+    bubble.className = "af-msg af-msg_agent";
+    bubble.innerHTML = `<span class="af-typing"><span></span><span></span><span></span></span>`;
+    thread.appendChild(bubble);
+    scrollDown();
+    window.setTimeout(() => {
+      bubble.textContent = text;
+      scrollDown();
+    }, 900);
+  };
+
+  const send = (text: string): void => {
+    const t = text.trim();
+    if (!t) return;
+    addMessage("user", t);
+    suggestions.hidden = true; // once the conversation is underway
+    agentReply(
+      "Sure — I've updated it with that change. Here's the revised version above the fold; let me know if you'd like any other tweaks."
+    );
+  };
+
+  // The second suggestion chip is tailored to the active prompt.
+  const contextChip = (prompt: string): string => {
+    if (/upsell/i.test(prompt)) return "Add a call to action";
+    if (/briefing/i.test(prompt)) return "Add key talking points";
+    return "Make it more concise";
+  };
+
+  const renderChips = (labels: string[]): void => {
+    suggestions.innerHTML = "";
+    labels.forEach((label) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "af-chip";
+      chip.textContent = label;
+      chip.addEventListener("click", () => send(label));
+      suggestions.appendChild(chip);
+    });
+    suggestions.hidden = labels.length === 0;
+  };
+
+  const open = (mode: string): void => {
+    thread.innerHTML = "";
+    if (mode === "seeded") {
+      const prompt = promptLabel?.textContent?.trim() || "AI Summary";
+      addMessage("agent", `Here's the draft I put together for the ${prompt}. Want me to refine it?`);
+      renderChips(["Make the tone formal", contextChip(prompt)]);
+      if (mask) mask.hidden = false; // hand the conversation off from the widget
+    } else {
+      addMessage("agent", "Hi, I'm Agentforce. How can I help you with this account?");
+      renderChips([]);
+      if (mask) mask.hidden = true; // a blank session is unrelated to the widget
+    }
+    panel.classList.add("is-open");
+    panel.setAttribute("aria-hidden", "false");
+    window.setTimeout(() => input.focus(), 260);
+  };
+
+  const close = (): void => {
+    panel.classList.remove("is-open");
+    panel.setAttribute("aria-hidden", "true");
+    if (mask) mask.hidden = true;
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-af-open]").forEach((btn) => {
+    btn.addEventListener("click", () => open(btn.dataset.afOpen ?? "blank"));
+  });
+  panel.querySelectorAll<HTMLElement>("[data-af-close]").forEach((btn) => {
+    btn.addEventListener("click", close);
+  });
+  composer.addEventListener("submit", (e) => {
+    e.preventDefault();
+    send(input.value);
+    input.value = "";
+  });
+}
+
+initAgentforce();

@@ -33,7 +33,7 @@
 
         <div class="slds-global-header__item">
           <ul class="slds-grid slds-grid_vertical-align-center header-actions">
-            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Agentforce"><svg class="slds-button__icon slds-button__icon_large"><use href="assets/icons/utility-sprite/svg/symbols.svg#einstein"></use></svg></button></li>
+            <li><button class="slds-button slds-button_icon slds-button_icon-container" title="Agentforce" data-af-open="blank"><svg class="slds-button__icon slds-button__icon_large"><use href="assets/icons/utility-sprite/svg/symbols.svg#einstein"></use></svg></button></li>
             <li class="header-fav">
               <button class="slds-button slds-button_icon slds-button_icon-container" title="Favorites"><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#favorite"></use></svg></button>
               <button class="slds-button slds-button_icon slds-button_icon-container header-fav__caret" title="Favorites list"><svg class="slds-button__icon slds-button__icon_x-small"><use href="assets/icons/utility-sprite/svg/symbols.svg#chevrondown"></use></svg></button>
@@ -243,6 +243,11 @@
         <div class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
           <!-- ==================== AI SUMMARY WIDGET ==================== -->
           <article id="ai-summary" class="slds-card ai-summary slds-m-bottom_small" data-state="empty">
+            <!-- Overlay shown while the conversation is handed to the Agentforce panel -->
+            <div class="ai-summary__mask" data-ai-mask hidden>
+              <svg class="ai-summary__mask-icon" aria-hidden="true"><use href="assets/icons/utility-sprite/svg/symbols.svg#einstein"></use></svg>
+              <p>Conversation is now in the Agentforce panel</p>
+            </div>
             <div class="slds-card__header slds-grid slds-grid_vertical-align-center">
               <header class="slds-media slds-media_center slds-has-flexi-truncate">
                 <div class="slds-media__figure">
@@ -486,7 +491,7 @@
                 <div class="ai-result__footer">
                   <div class="ai-result__footer-left">
                     <button class="slds-button slds-button_icon slds-button_icon-border-filled ai-back" type="button" data-ai-back-result title="Back" aria-label="Back"><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#back"></use></svg></button>
-                    <button class="slds-button slds-button_outline-brand ai-result__agentforce" type="button">
+                    <button class="slds-button slds-button_outline-brand ai-result__agentforce" type="button" data-af-open="seeded">
                       <svg class="slds-button__icon slds-button__icon_left"><use href="assets/icons/utility-sprite/svg/symbols.svg#sparkles"></use></svg>Ask Agentforce
                     </button>
                   </div>
@@ -599,6 +604,27 @@
         <div class="expand-modal__body" data-expand-slot></div>
       </div>
     </div>
+
+    <!-- ==================== AGENTFORCE PANEL ==================== -->
+    <aside class="af-panel" data-af-panel aria-label="Agentforce" aria-hidden="true">
+      <header class="af-panel__header">
+        <span class="af-panel__title">
+          <svg class="af-panel__logo" aria-hidden="true"><use href="assets/icons/utility-sprite/svg/symbols.svg#einstein"></use></svg>
+          Agentforce
+        </span>
+        <button class="slds-button slds-button_icon af-panel__close" type="button" data-af-close title="Close" aria-label="Close Agentforce">
+          <svg class="slds-button__icon" aria-hidden="true"><use href="assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg>
+        </button>
+      </header>
+      <div class="af-panel__thread" data-af-thread></div>
+      <div class="af-panel__suggestions" data-af-suggestions hidden></div>
+      <form class="af-panel__composer" data-af-composer>
+        <input type="text" class="af-panel__input" data-af-input placeholder="Message Agentforce&hellip;" aria-label="Message Agentforce" autocomplete="off" />
+        <button class="slds-button slds-button_icon af-panel__send" type="submit" title="Send" aria-label="Send">
+          <svg class="slds-button__icon" aria-hidden="true"><use href="assets/icons/utility-sprite/svg/symbols.svg#send"></use></svg>
+        </button>
+      </form>
+    </aside>
 
     <!-- ============================ UTILITY BAR ============================ -->
     <footer class="utility-bar">

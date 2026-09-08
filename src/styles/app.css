@@ -663,20 +663,21 @@ body {
   padding: 1.5rem;
   text-align: center;
   border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--slds-g-color-surface-3, #e5e5e5) 78%, transparent);
+  /* A darker veil so the widget's boundary reads clearly against the page. */
+  background: color-mix(in srgb, var(--slds-g-color-on-surface-2, #2e2e2e) 70%, transparent);
   backdrop-filter: blur(1px);
 }
 .ai-summary__mask-icon {
   width: 1.75rem;
   height: 1.75rem;
-  fill: var(--slds-g-color-on-surface-1, #5c5c5c);
+  fill: #fff;
 }
 .ai-summary__mask p {
   margin: 0;
   max-width: 16rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--slds-g-color-on-surface-2, #2e2e2e);
+  color: #fff;
 }
 
 .af-panel {
@@ -743,6 +744,18 @@ body {
   background: var(--slds-g-color-accent-1, #066afe);
   color: #fff;
   border-bottom-right-radius: 0.25rem;
+}
+/* Rich draft bubble keeps the generated formatting (headings, bold, bullets). */
+.af-msg_rich {
+  max-width: 100%;
+  white-space: normal;
+}
+.af-msg_rich .ai-result__body {
+  font-size: 0.85rem;
+}
+.af-msg_rich .ai-result__body p:last-child,
+.af-msg_rich .ai-result__body .ai-brief__list:last-child {
+  margin-bottom: 0;
 }
 /* Typing indicator */
 .af-typing {

@@ -770,6 +770,19 @@ function initAgentforce(): void {
     return el;
   };
 
+  // A wider agent bubble that preserves the generated draft's formatting
+  // (headings, bold, bullets) by cloning its HTML into a result-body wrapper.
+  const addDraft = (html: string): void => {
+    const el = document.createElement("div");
+    el.className = "af-msg af-msg_agent af-msg_rich";
+    const body = document.createElement("div");
+    body.className = "ai-result__body";
+    body.innerHTML = html;
+    el.appendChild(body);
+    thread.appendChild(el);
+    scrollDown();
+  };
+
   // Show a typing indicator, then replace it with the agent's reply.
   const agentReply = (text: string): void => {
     const bubble = document.createElement("div");
@@ -817,11 +830,11 @@ function initAgentforce(): void {
     thread.innerHTML = "";
     if (mode === "seeded") {
       const prompt = promptLabel?.textContent?.trim() || "AI Summary";
-      const draft = emailEl?.innerText.trim();
-      // Carry the generated draft into the conversation so it continues here.
-      if (draft) {
+      const draftHtml = emailEl?.innerHTML.trim();
+      // Carry the generated draft (with its formatting) so it continues here.
+      if (draftHtml) {
         addMessage("agent", `Here's the draft I put together for the ${prompt}:`);
-        addMessage("agent", draft);
+        addDraft(draftHtml);
         addMessage("agent", "Want me to refine it?");
       } else {
         addMessage("agent", `Here's the draft I put together for the ${prompt}. Want me to refine it?`);
@@ -849,6 +862,10 @@ function initAgentforce(): void {
   });
   panel.querySelectorAll<HTMLElement>("[data-af-close]").forEach((btn) => {
     btn.addEventListener("click", close);
+  });
+  // Citation links carried in with the draft are illustrative — don't navigate.
+  thread.addEventListener("click", (e) => {
+    if ((e.target as HTMLElement)?.closest("a")) e.preventDefault();
   });
   const submit = (): void => {
     send(input.value);

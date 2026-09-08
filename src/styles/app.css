@@ -598,6 +598,53 @@ body {
 .ai-file:hover {
   background: var(--slds-g-color-surface-2, #f3f3f3);
 }
+
+/* ---- Placeholder for unwired prompts ---- */
+.ai-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.6rem;
+  padding: 2.5rem 1.5rem;
+}
+.ai-placeholder__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  fill: var(--slds-g-color-accent-1, #066afe);
+  opacity: 0.55;
+}
+.ai-placeholder__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--slds-g-color-on-surface-2, #2e2e2e);
+}
+.ai-placeholder__note {
+  margin: 0;
+  max-width: 22rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--slds-g-color-on-surface-1, #5c5c5c);
+}
+.ai-placeholder__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--slds-g-color-accent-1, #066afe);
+  font-weight: 600;
+  cursor: pointer;
+}
+.ai-placeholder__link:hover {
+  text-decoration: underline;
+}
+/* In placeholder mode, hide the form fields and the Generate button; keep the
+   prompt switcher and Back so the user can navigate to a wired prompt. */
+.ai-summary.is-placeholder .ai-field,
+.ai-summary.is-placeholder .ai-form__generate {
+  display: none;
+}
 .ai-field .slds-required {
   color: var(--slds-g-color-error-1, #ba0517);
   margin-right: 0.125rem;

@@ -118,17 +118,29 @@ function initAiSummary(): void {
     if (abbr) abbr.hidden = !required;
   }
 
-  // Pre-Call Briefing swaps in its own field set (Meeting with, Related
-  // Opportunity, Call purpose, Offer Document) and hides the email-only inputs.
+  // Only two prompts have real forms; the rest show a placeholder panel.
+  const placeholderEl = card.querySelector<HTMLElement>("[data-ai-placeholder]");
+
+  // Reshape the form for the active prompt: Pre-Call Briefing swaps in its own
+  // field set; Personalized Upsell Email uses the default fields; every other
+  // prompt is unwired and shows the placeholder instead of a form.
   function applyPromptConfig(text: string): void {
     const briefing = text === "Pre-Call Briefing";
+    const wired = text === "Personalized Upsell Email" || briefing;
     card!.classList.toggle("is-briefing", briefing);
+    card!.classList.toggle("is-placeholder", !wired);
+    if (placeholderEl) placeholderEl.hidden = wired;
     form?.querySelectorAll<HTMLElement>("[data-briefing-only]").forEach((el) => (el.hidden = !briefing));
     form?.querySelectorAll<HTMLElement>("[data-default-only]").forEach((el) => (el.hidden = briefing));
     relabel(oppBox, briefing ? "Related Opportunity" : "Opportunity", !briefing);
     relabel(contactBox, briefing ? "Meeting with" : "Contact", true);
     updateGenerate();
   }
+
+  // Placeholder "Try …" links jump straight into a wired prompt's form.
+  card.querySelectorAll<HTMLElement>("[data-jump-prompt]").forEach((link) => {
+    link.addEventListener("click", () => openForm(link.dataset.jumpPrompt!));
+  });
 
   const openForm = (promptText: string): void => {
     // Dismiss any lingering tooltip from the clicked prompt button.

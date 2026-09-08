@@ -858,7 +858,12 @@ function initAgentforce(): void {
   };
 
   document.querySelectorAll<HTMLElement>("[data-af-open]").forEach((btn) => {
-    btn.addEventListener("click", () => open(btn.dataset.afOpen ?? "blank"));
+    btn.addEventListener("click", () => {
+      const mode = btn.dataset.afOpen ?? "blank";
+      // The header Agentforce icon toggles the panel; "Ask Agentforce" always opens.
+      if (mode === "blank" && panel.classList.contains("is-open")) close();
+      else open(mode);
+    });
   });
   panel.querySelectorAll<HTMLElement>("[data-af-close]").forEach((btn) => {
     btn.addEventListener("click", close);

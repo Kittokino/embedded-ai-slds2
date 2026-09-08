@@ -334,8 +334,18 @@ body {
   bottom: 0;
   margin-top: auto;
   padding-top: 0.75rem;
+  padding-bottom: 0.5rem; /* clear the modal's rounded corner */
   background: var(--slds-g-color-surface-1, #fff);
   border-top: 1px solid var(--slds-g-color-border-container-1, #ececec);
+}
+/* Center the absolutely-positioned Back button so it sits correctly even when
+   Generate is hidden (placeholder prompts). */
+.expand-modal .ai-summary__form-footer {
+  min-height: 2.75rem;
+}
+.expand-modal .ai-summary__form-footer [data-ai-back] {
+  top: 50%;
+  transform: translateY(-50%);
 }
 /* Expanded: surface the extra prompts as buttons and drop them from "More". */
 .ai-prompt-extra {

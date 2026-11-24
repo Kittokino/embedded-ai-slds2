@@ -488,6 +488,7 @@
                     </ul>
                   </div>
                 </div>
+
                 <div class="ai-result__footer">
                   <div class="ai-result__footer-left">
                     <button class="slds-button slds-button_icon slds-button_icon-border-filled ai-back" type="button" data-ai-back-result title="Back" aria-label="Back"><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#back"></use></svg></button>
@@ -496,9 +497,9 @@
                     </button>
                   </div>
                   <div class="ai-result__actions">
-                    <button class="slds-button slds-button_icon" type="button" title="Good response"><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#like"></use></svg></button>
-                    <button class="slds-button slds-button_icon" type="button" title="Bad response"><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#dislike"></use></svg></button>
-                    <button class="slds-button slds-button_icon" type="button" title="Edit"><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#edit"></use></svg></button>
+                    <button class="slds-button slds-button_icon ai-feedback__thumb" type="button" title="Good response" data-feedback-like><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#like"></use></svg></button>
+                    <button class="slds-button slds-button_icon ai-feedback__thumb" type="button" title="Bad response" data-feedback-dislike><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#dislike"></use></svg></button>
+                    <button class="slds-button slds-button_icon" type="button" title="Edit" hidden><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#edit"></use></svg></button>
                     <button class="slds-button slds-button_icon" type="button" title="Copy" data-ai-copy><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#copy"></use></svg></button>
                   </div>
                 </div>
@@ -554,6 +555,47 @@
           </article>
         </div>
       </div>
+    </div>
+
+    <!-- ==================== FEEDBACK POPOVER (thumbs-down) ==================== -->
+    <div class="ai-feedback-pop" data-feedback-pop hidden>
+      <section class="slds-popover slds-nubbin_bottom-right" role="dialog" aria-label="Feedback">
+        <div class="slds-popover__body">
+          <p class="ai-feedback__title">Help us improve</p>
+          <textarea class="slds-textarea ai-feedback__text" data-feedback-text rows="2" aria-label="Additional feedback" placeholder="Feedback submitted. Add any additional comments here"></textarea>
+          <div class="ai-feedback__actions">
+            <button class="slds-button slds-button_neutral" type="button" data-feedback-cancel>Cancel</button>
+            <button class="slds-button slds-button_brand" type="button" data-feedback-save disabled>Save</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==================== ABOUT / INTRO MODAL ==================== -->
+    <div class="intro-modal" data-intro-modal hidden>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="intro-heading" aria-describedby="intro-desc" class="slds-modal slds-fade-in-open slds-modal_small">
+        <div class="slds-modal__container">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" data-intro-close title="Close">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true"><use href="assets/icons/utility-sprite/svg/symbols.svg#close"></use></svg>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <div class="slds-modal__header">
+            <h1 id="intro-heading" class="slds-modal__title slds-hyphenate">About this demo</h1>
+          </div>
+          <div class="slds-modal__content slds-p-around_medium" id="intro-desc">
+            <p class="intro-modal__text">This is a fictional, non-commercial prototype that showcases an embedded AI workflow and its design. All accounts, contacts, and content shown are invented for the demonstration.</p>
+            <p class="intro-modal__text">The interface is styled with the publicly available Salesforce Lightning Design System 2 (SLDS 2) kit, hosted on GitHub, to mimic a Salesforce instance. It is an independent project, not affiliated with or endorsed by Salesforce.</p>
+          </div>
+          <div class="slds-modal__footer intro-modal__footer">
+            <label class="intro-modal__dontshow">
+              <input type="checkbox" data-intro-dontshow />
+              <span>Don't show this again</span>
+            </label>
+            <button class="slds-button slds-button_brand" type="button" data-intro-close data-intro-primary>Continue</button>
+          </div>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open" data-intro-close></div>
     </div>
 
     <!-- ==================== PROMPT TEMPLATES MODAL ==================== -->

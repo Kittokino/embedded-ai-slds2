@@ -375,14 +375,29 @@ function initAiSummary(): void {
     if (fbText) fbText.value = "";
     if (fbSave) fbSave.disabled = true;
   };
-  // Float the popover above the thumbs-down, right-aligned to it.
+  // Float the popover above the thumbs-down, with the nubbin's point centered
+  // over the thumb (the nubbin sits inset from the popover's right edge).
   const positionPop = (anchor: HTMLElement): void => {
     if (!pop) return;
     pop.hidden = false;
     const r = anchor.getBoundingClientRect();
     const p = pop.getBoundingClientRect();
-    const gap = 10;
-    const left = Math.max(8, Math.min(r.right - p.width, window.innerWidth - p.width - 8));
+    // Distance from the popover's right edge to the nubbin's center.
+    let nubbinFromRight = 32;
+    const sec = pop.querySelector(".slds-popover");
+    if (sec) {
+      const a = getComputedStyle(sec, "::after");
+      const nr = parseFloat(a.right);
+      const nw = parseFloat(a.width);
+      if (!Number.isNaN(nr) && !Number.isNaN(nw)) nubbinFromRight = nr + nw / 2;
+    }
+    const gap = 15; // sit a little higher above the thumb
+    const nudgeLeft = 8; // visual tweak so the nubbin sits on the thumb, not right of it
+    const anchorCenter = r.left + r.width / 2;
+    const left = Math.max(
+      8,
+      Math.min(anchorCenter + nubbinFromRight - p.width - nudgeLeft, window.innerWidth - p.width - 8)
+    );
     pop.style.left = `${left}px`;
     pop.style.top = `${Math.max(8, r.top - p.height - gap)}px`;
   };

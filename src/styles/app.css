@@ -403,6 +403,46 @@ body {
 .pin-modal .slds-modal__close .slds-button__icon {
   fill: #fff;
 }
+
+/* ---- About / intro modal ---- */
+.intro-modal .slds-modal__container {
+  max-width: 32rem;
+}
+.intro-modal .slds-modal__close,
+.intro-modal .slds-modal__close:hover,
+.intro-modal .slds-modal__close:focus,
+.intro-modal .slds-modal__close:active {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.intro-modal .slds-modal__close .slds-button__icon {
+  fill: #fff;
+}
+.intro-modal__text {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--slds-g-color-on-surface-1, #444);
+}
+.intro-modal__text:last-child {
+  margin-bottom: 0;
+}
+.intro-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.intro-modal__dontshow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--slds-g-color-on-surface-1, #5c5c5c);
+  cursor: pointer;
+}
+
 .pin-modal__desc {
   margin: 0.5rem auto 0;
   max-width: 40rem;

@@ -890,3 +890,48 @@ function initAgentforce(): void {
 }
 
 initAgentforce();
+
+/**
+ * "About this demo" intro modal. Shows once per browser session; the
+ * "Don't show this again" checkbox persists a permanent opt-out. Storage is
+ * wrapped in try/catch since it can throw or be empty (private windows, etc.).
+ */
+function initIntroModal(): void {
+  const modal = document.querySelector<HTMLElement>("[data-intro-modal]");
+  if (!modal) return;
+  const dontShow = modal.querySelector<HTMLInputElement>("[data-intro-dontshow]");
+
+  const get = (store: Storage, key: string): string | null => {
+    try {
+      return store.getItem(key);
+    } catch {
+      return null;
+    }
+  };
+  const set = (store: Storage, key: string, value: string): void => {
+    try {
+      store.setItem(key, value);
+    } catch {
+      /* storage unavailable — show every load rather than fail */
+    }
+  };
+
+  const dismissedForever = get(localStorage, "intro-dismissed") === "true";
+  const seenThisSession = get(sessionStorage, "intro-seen") === "true";
+  if (!dismissedForever && !seenThisSession) modal.hidden = false;
+
+  const close = (): void => {
+    set(sessionStorage, "intro-seen", "true");
+    if (dontShow?.checked) set(localStorage, "intro-dismissed", "true");
+    modal.hidden = true;
+  };
+
+  modal.querySelectorAll<HTMLElement>("[data-intro-close]").forEach((el) =>
+    el.addEventListener("click", close)
+  );
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hidden) close();
+  });
+}
+
+initIntroModal();

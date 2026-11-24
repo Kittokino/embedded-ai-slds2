@@ -1344,6 +1344,36 @@ body {
   align-items: center;
   gap: 0.5rem;
 }
+/* Active thumb (feedback given) */
+.ai-feedback__thumb.is-active .slds-button__icon {
+  fill: var(--slds-g-color-accent-1, #066afe);
+}
+
+/* ---- Feedback comment card (thumbs-down) ---- */
+.ai-feedback {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--slds-g-color-border-1, #c9c9c9);
+  border-radius: 0.5rem;
+  background: var(--slds-g-color-surface-1, #fff);
+}
+.ai-feedback__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--slds-g-color-on-surface-2, #2e2e2e);
+}
+.ai-feedback__text {
+  min-height: 3.25rem;
+  font-size: 0.85rem;
+  resize: vertical;
+}
+.ai-feedback__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
 
 /* Keep the widget's header actions (info, expand) quiet so they don't
    compete with the sparkle title and the CTAs. */

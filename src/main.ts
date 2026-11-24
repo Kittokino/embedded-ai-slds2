@@ -360,6 +360,44 @@ function initAiSummary(): void {
     }
   });
 
+  // Feedback: thumbs up/down. Thumbs-down opens a comment card; thumbs-up just
+  // registers. The two are mutually exclusive.
+  const likeBtn = card.querySelector<HTMLElement>("[data-feedback-like]");
+  const dislikeBtn = card.querySelector<HTMLElement>("[data-feedback-dislike]");
+  const fbCard = card.querySelector<HTMLElement>("[data-feedback-card]");
+  const fbText = card.querySelector<HTMLTextAreaElement>("[data-feedback-text]");
+  const fbSave = card.querySelector<HTMLButtonElement>("[data-feedback-save]");
+  const fbCancel = card.querySelector<HTMLElement>("[data-feedback-cancel]");
+
+  const closeFeedback = (): void => {
+    if (fbCard) fbCard.hidden = true;
+    if (fbText) fbText.value = "";
+    if (fbSave) fbSave.disabled = true;
+  };
+  likeBtn?.addEventListener("click", () => {
+    const on = !likeBtn.classList.contains("is-active");
+    likeBtn.classList.toggle("is-active", on);
+    dislikeBtn?.classList.remove("is-active");
+    closeFeedback();
+    if (on) showToast("Thanks for your feedback.");
+  });
+  dislikeBtn?.addEventListener("click", () => {
+    dislikeBtn.classList.add("is-active");
+    likeBtn?.classList.remove("is-active");
+    if (fbCard) fbCard.hidden = false;
+    fbText?.focus();
+    fbCard?.scrollIntoView({ block: "nearest" });
+  });
+  fbText?.addEventListener("input", () => {
+    if (fbSave) fbSave.disabled = fbText.value.trim() === "";
+  });
+  fbCancel?.addEventListener("click", closeFeedback);
+  fbSave?.addEventListener("click", () => {
+    if (!fbText || fbText.value.trim() === "") return;
+    closeFeedback();
+    showToast("Your comments have been submitted.");
+  });
+
   // Prompt switcher (the chevron next to "Prompt:") — form and result states.
   const promptSwitches = card.querySelectorAll<HTMLElement>("[data-prompt-switch]");
   const closePromptMenus = (): void => {

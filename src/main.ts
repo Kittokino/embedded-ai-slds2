@@ -360,43 +360,76 @@ function initAiSummary(): void {
     }
   });
 
-  // Feedback: thumbs up/down. Thumbs-down opens a comment card; thumbs-up just
-  // registers. The two are mutually exclusive.
+  // Feedback: thumbs up/down are toggles. Thumbs-down opens a comment popover;
+  // thumbs-up just registers. Clicking an active thumb again withdraws it
+  // (no toast). The two are mutually exclusive.
   const likeBtn = card.querySelector<HTMLElement>("[data-feedback-like]");
   const dislikeBtn = card.querySelector<HTMLElement>("[data-feedback-dislike]");
-  const fbCard = card.querySelector<HTMLElement>("[data-feedback-card]");
-  const fbText = card.querySelector<HTMLTextAreaElement>("[data-feedback-text]");
-  const fbSave = card.querySelector<HTMLButtonElement>("[data-feedback-save]");
-  const fbCancel = card.querySelector<HTMLElement>("[data-feedback-cancel]");
+  const pop = document.querySelector<HTMLElement>("[data-feedback-pop]");
+  const fbText = pop?.querySelector<HTMLTextAreaElement>("[data-feedback-text]");
+  const fbSave = pop?.querySelector<HTMLButtonElement>("[data-feedback-save]");
+  const fbCancel = pop?.querySelector<HTMLElement>("[data-feedback-cancel]");
 
-  const closeFeedback = (): void => {
-    if (fbCard) fbCard.hidden = true;
+  const closePop = (): void => {
+    if (pop) pop.hidden = true;
     if (fbText) fbText.value = "";
     if (fbSave) fbSave.disabled = true;
   };
+  // Float the popover above the thumbs-down, right-aligned to it.
+  const positionPop = (anchor: HTMLElement): void => {
+    if (!pop) return;
+    pop.hidden = false;
+    const r = anchor.getBoundingClientRect();
+    const p = pop.getBoundingClientRect();
+    const gap = 10;
+    const left = Math.max(8, Math.min(r.right - p.width, window.innerWidth - p.width - 8));
+    pop.style.left = `${left}px`;
+    pop.style.top = `${Math.max(8, r.top - p.height - gap)}px`;
+  };
+
   likeBtn?.addEventListener("click", () => {
     const on = !likeBtn.classList.contains("is-active");
     likeBtn.classList.toggle("is-active", on);
     dislikeBtn?.classList.remove("is-active");
-    closeFeedback();
-    if (on) showToast("Thanks for your feedback.");
+    closePop();
+    if (on) showToast("Thanks for your feedback."); // only on activation
   });
   dislikeBtn?.addEventListener("click", () => {
-    dislikeBtn.classList.add("is-active");
-    likeBtn?.classList.remove("is-active");
-    if (fbCard) fbCard.hidden = false;
-    fbText?.focus();
-    fbCard?.scrollIntoView({ block: "nearest" });
+    const on = !dislikeBtn.classList.contains("is-active");
+    if (on) {
+      dislikeBtn.classList.add("is-active");
+      likeBtn?.classList.remove("is-active");
+      positionPop(dislikeBtn);
+      fbText?.focus();
+    } else {
+      // withdraw — back to neutral, no toast
+      dislikeBtn.classList.remove("is-active");
+      closePop();
+    }
   });
   fbText?.addEventListener("input", () => {
     if (fbSave) fbSave.disabled = fbText.value.trim() === "";
   });
-  fbCancel?.addEventListener("click", closeFeedback);
+  fbCancel?.addEventListener("click", closePop); // keeps the thumb active, just closes the box
   fbSave?.addEventListener("click", () => {
     if (!fbText || fbText.value.trim() === "") return;
-    closeFeedback();
+    closePop();
     showToast("Your comments have been submitted.");
   });
+  // Dismiss the popover on outside click, Esc, or scroll/resize.
+  document.addEventListener("click", (e) => {
+    if (!pop || pop.hidden) return;
+    const t = e.target as Node;
+    if (!pop.contains(t) && !dislikeBtn?.contains(t)) closePop();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && pop && !pop.hidden) closePop();
+  });
+  const repositionOrClose = (): void => {
+    if (pop && !pop.hidden && dislikeBtn) positionPop(dislikeBtn);
+  };
+  window.addEventListener("scroll", repositionOrClose, true);
+  window.addEventListener("resize", repositionOrClose);
 
   // Prompt switcher (the chevron next to "Prompt:") — form and result states.
   const promptSwitches = card.querySelectorAll<HTMLElement>("[data-prompt-switch]");

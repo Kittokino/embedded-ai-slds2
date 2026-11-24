@@ -489,20 +489,6 @@
                   </div>
                 </div>
 
-                <!-- Feedback comment card (shown when "Bad response" is clicked) -->
-                <div class="ai-feedback" data-feedback-card hidden>
-                  <p class="ai-feedback__title">Help us improve</p>
-                  <div class="slds-form-element">
-                    <div class="slds-form-element__control">
-                      <textarea class="slds-textarea ai-feedback__text" data-feedback-text rows="2" aria-label="Additional feedback" placeholder="Feedback submitted. Add any additional comments here"></textarea>
-                    </div>
-                  </div>
-                  <div class="ai-feedback__actions">
-                    <button class="slds-button slds-button_neutral" type="button" data-feedback-cancel>Cancel</button>
-                    <button class="slds-button slds-button_brand" type="button" data-feedback-save disabled>Save</button>
-                  </div>
-                </div>
-
                 <div class="ai-result__footer">
                   <div class="ai-result__footer-left">
                     <button class="slds-button slds-button_icon slds-button_icon-border-filled ai-back" type="button" data-ai-back-result title="Back" aria-label="Back"><svg class="slds-button__icon"><use href="assets/icons/utility-sprite/svg/symbols.svg#back"></use></svg></button>
@@ -569,6 +555,20 @@
           </article>
         </div>
       </div>
+    </div>
+
+    <!-- ==================== FEEDBACK POPOVER (thumbs-down) ==================== -->
+    <div class="ai-feedback-pop" data-feedback-pop hidden>
+      <section class="slds-popover slds-nubbin_bottom-right" role="dialog" aria-label="Feedback">
+        <div class="slds-popover__body">
+          <p class="ai-feedback__title">Help us improve</p>
+          <textarea class="slds-textarea ai-feedback__text" data-feedback-text rows="2" aria-label="Additional feedback" placeholder="Feedback submitted. Add any additional comments here"></textarea>
+          <div class="ai-feedback__actions">
+            <button class="slds-button slds-button_neutral" type="button" data-feedback-cancel>Cancel</button>
+            <button class="slds-button slds-button_brand" type="button" data-feedback-save disabled>Save</button>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- ==================== ABOUT / INTRO MODAL ==================== -->

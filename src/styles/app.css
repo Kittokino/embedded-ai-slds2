@@ -1349,13 +1349,15 @@ body {
   fill: var(--slds-g-color-accent-1, #066afe);
 }
 
-/* ---- Feedback comment card (thumbs-down) ---- */
-.ai-feedback {
-  margin-top: 0.75rem;
-  padding: 0.75rem;
-  border: 1px solid var(--slds-g-color-border-1, #c9c9c9);
-  border-radius: 0.5rem;
-  background: var(--slds-g-color-surface-1, #fff);
+/* ---- Feedback popover (thumbs-down) ---- */
+.ai-feedback-pop {
+  position: fixed;
+  z-index: 9600; /* above panels/modals, below toasts (9999) */
+  width: 18rem;
+}
+.ai-feedback-pop .slds-popover {
+  width: 100%;
+  max-width: 100%;
 }
 .ai-feedback__title {
   margin: 0 0 0.5rem;
